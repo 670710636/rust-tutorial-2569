@@ -183,79 +183,34 @@ fn main() {
 ---
 ### 9.5 Abstraction / Other PPL Concepts
 
-Modules, Packages และ Crates เกี่ยวข้องกับแนวคิดทาง PPL หลายด้าน ได้แก่ **Abstraction, Scope, Visibility และ Namespace**
-
-#### Abstraction
-
-Module ช่วยสร้าง **Abstraction** โดยสามารถซ่อนรายละเอียดการทำงานภายใน และเปิดเผยเฉพาะ Item ที่ต้องการให้ส่วนอื่นของโปรแกรมใช้งานผ่าน `pub`
-
-ตัวอย่าง:
+Module ช่วยสร้าง Abstraction โดยรวบรวม Function, Struct, Enum และ Item ที่เกี่ยวข้องไว้ด้วยกัน ผู้ใช้งาน Module สามารถเรียกผ่าน Public Interface โดยไม่จำเป็นต้องรู้รายละเอียด Implementation ภายใน
 
 ```rust
-mod calculator {
-    fn calculate(a: i32, b: i32) -> i32 {
-        a + b
+mod food {
+    pub fn order() {
+        prepare();
+        println!("Order: Pizza");
     }
 
-    pub fn add(a: i32, b: i32) -> i32 {
-        calculate(a, b)
+    fn prepare() {
+        println!("Preparing...");
     }
 }
 ```
 
-`calculate()` เป็นรายละเอียดภายในของ Module และไม่ได้ประกาศเป็น `pub` จึงไม่สามารถเรียกใช้โดยตรงจากภายนอกได้
+ในตัวอย่าง `order()` เป็น Public Interface ที่ภายนอกสามารถเรียกใช้ได้ ส่วน `prepare()` เป็นรายละเอียดภายในที่ถูกซ่อนไว้
 
-ส่วน `add()` เป็น Public Interface ที่ Code ภายนอกสามารถเรียกใช้งานได้
+#### Encapsulation
 
-แนวคิดนี้ทำให้ผู้ใช้งาน Module สนใจเฉพาะสิ่งที่ Module เปิดให้ใช้งาน โดยไม่จำเป็นต้องรู้รายละเอียด Implementation ภายในทั้งหมด
-
-#### Scope
-
-Rust ใช้ **Lexical Scope หรือ Static Scope** ซึ่งขอบเขตของชื่อสามารถพิจารณาได้จากโครงสร้างของ Source Code
-
-แต่ละ Module สามารถมี Scope ของตัวเอง และสามารถใช้ `use` เพื่อนำชื่อจาก Path อื่นเข้ามาใน Scope ปัจจุบัน
-
-ตัวอย่าง:
-
-```rust
-use crate::food::order;
-```
-
-ทำให้ชื่อ `order` สามารถถูกเรียกใช้ใน Scope ปัจจุบันได้โดยไม่ต้องเขียน `crate::food::order` ทุกครั้ง
-
-#### Visibility
-
-Item ภายใน Module เป็น **Private โดย Default**
-
-หากต้องการให้ Code ภายนอกสามารถเข้าถึง Item ได้ จะต้องกำหนด Visibility เช่น `pub`
-
-ตัวอย่าง:
-
-```rust
-pub fn order() {
-    println!("Order food");
-}
-```
-
-`pub` ทำให้ Function `order()` สามารถเข้าถึงได้จากภายนอก Module ตามกฎ Visibility ของ Rust
-
-แนวคิดนี้ช่วยให้ Programmer ควบคุมได้ว่าส่วนใดเป็น Implementation ภายใน และส่วนใดเป็น Public Interface
-
-#### Namespace
-
-Module ทำหน้าที่เป็น **Namespace** ช่วยจัดกลุ่มชื่อและลดปัญหาการใช้ชื่อซ้ำกัน
-
-ตัวอย่าง:
+Rust Module System รองรับ Encapsulation โดยสามารถกำหนดว่าส่วนใดเป็น Public และส่วนใดเป็น Private
 
 ```text
-crate::customer::create
-crate::product::create
+food
+├── order()      → Public
+└── prepare()    → Private
 ```
 
-ทั้ง Module `customer` และ `product` สามารถมี Function ชื่อ `create` เหมือนกันได้ เพราะ Function ทั้งสองอยู่ภายใต้ Namespace ที่แตกต่างกัน
-
-ดังนั้น Module System ของ Rust จึงสนับสนุนแนวคิดทาง PPL หลายด้าน ทั้ง **Abstraction, Scope, Visibility และ Namespace**
-
+ทำให้สามารถซ่อน Implementation Detail และเปิดเผยเฉพาะส่วนที่ต้องการให้ผู้ใช้งานเข้าถึง
 ---
 
 ### 9.6 Why Rust?
