@@ -91,6 +91,24 @@ pub fn add(a: i32, b: i32) -> i32
 ```
 คำว่า `pub` ย่อมาจาก public และทำให้ Function นี้สามารถถูกเรียกใช้งานจากภายนอก Module ได้
 
+ในทางตรงกันข้าม Function secret_operation ไม่ได้ใช้ pub
+```rust
+fn secret_operation(a: i32, b: i32) -> i32
+```
+ดังนั้น Function นี้จะเป็น private และสามารถใช้งานได้ภายในModule calculator เท่านั้น
+
+โดยการเรียกใช้งาน Function สามารถเขียนเป็น
+```rust
+calculator::add(10, 20)
+```
+โดย `::` ใช้สำหรับเข้าถึงสิ่งที่อยู่ภายใน Module ผ่าน Module Path
+
+ซึ่งตัวอย่างที่ 1 นี้แสดงแนวคิดเรื่อง Visibility ของ Rust:
+
+`pub` → สามารถเข้าถึงจากภายนอก Module ได้
+ไม่มี `pub` → เป็น private โดยค่าเริ่มต้น
+`::` → ใช้เข้าถึงสิ่งต่าง ๆ ผ่าน Module Path
+
 ---
 
 ## 9. PPL Perspective
