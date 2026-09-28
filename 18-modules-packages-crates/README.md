@@ -77,6 +77,19 @@ fn main() {
 ```
 Result = 30
 ```
+#### โดยจะอธิบายทีละขั้นดังนี้
+
+คำสั่ง *mod*
+```rust
+mod calculator
+```
+ใช้สำหรับสร้าง Module ที่ชื่อว่า `calculator`
+
+Function `add` ถูกประกาศด้วย `pub`
+```rust
+pub fn add(a: i32, b: i32) -> i32
+```
+คำว่า `pub` ย่อมาจาก public และทำให้ Function นี้สามารถถูกเรียกใช้งานจากภายนอก Module ได้
 
 ---
 
