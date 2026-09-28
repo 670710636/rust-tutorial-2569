@@ -139,9 +139,9 @@ modules_demo/
 
 ในตัวอย่าง Project `modules_demo` นี้แบ่ง Code ออกเป็น 3 ไฟล์
 
-- main.rs → โปรแกรมหลัก
-- calculator.rs → Function สำหรับการคำนวณ
-- utils.rs → Function สำหรับงานทั่วไป
+- **main.rs** → โปรแกรมหลัก
+- **calculator.rs** → Function สำหรับการคำนวณ
+- **utils.rs** → Function สำหรับงานทั่วไป
 
 #### calculator.rs
 ```rust
