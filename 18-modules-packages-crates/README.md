@@ -167,8 +167,7 @@ Rust ใช้ Path เพื่อระบุว่าแต่ละชื่
 food::order();
 ```
 
-ชื่อ `food` จะถูก Resolve ไปยัง Module `food` และ `order` จะถูก Resolve ไปยัง Function `order()` ภายใน Module นั้น
-
+โปรแกรมจะเข้าไปหา Module food ก่อน แล้วจึงหาและเรียกใช้ Function order() ที่อยู่ข้างใน Module นั้น
 สามารถใช้ `use` เพื่อนำ Path เข้ามาใน Scope และสร้างชื่อที่เรียกใช้งานได้สั้นลง
 
 ```rust
