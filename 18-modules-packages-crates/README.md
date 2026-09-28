@@ -501,4 +501,4 @@ Header + Source         Package
 
 **Python** ใช้ไฟล์ `.py` เป็น Module และ `import` เพื่อนำ Module มาใช้ แต่ไม่มี Visibility Control ที่บังคับแบบ `pub` ของ Rust โดยมักใช้ Convention เช่น `_name`
 
-ในมุมมอง PPL ความแตกต่างสำคัญของ Rust คือการรวม **Modularity, Namespace, Scope, Visibility และ Information Hiding** เข้ากับการตรวจสอบของ Compiler และยังทำงานร่วมกับ **Ownership และ Borrowing** เพื่อเพิ่ม Compile-time และ Memory Safety
+**ในมุมมอง PPL** จุดเด่นของ Rust คือการจัดการ **Modularity, Namespace, Scope, Visibility** และ **Information Hiding** อย่างเป็นระบบ โดย Package, Crate และ Module ช่วยแบ่งโครงสร้างของโปรแกรม ส่วน pub และ Module Path ช่วยกำหนดการเข้าถึงและขอบเขตของชื่อ ซึ่ง Compiler สามารถตรวจสอบได้ตั้งแต่ Compile Time
