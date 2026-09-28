@@ -54,7 +54,7 @@ Package, Crate และการจัดโครงสร้างโปร�
 ตัวอย่างนี้แสดงวิธีสร้าง Module และกำหนดว่า Function ใดสามารถ
 ถูกเรียกใช้งานจากภายนอก Module ได้
 
- Code ตัวอย่าง
+#### Code ตัวอย่าง
 
 ```rust
 mod calculator {
@@ -72,6 +72,10 @@ fn main() {
 
     println!("Result = {}", result);
 }
+```
+ผลลัพธ์ที่คาดว่าจะได้
+```
+Result = 30
 ```
 
 ---
