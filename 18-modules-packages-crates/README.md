@@ -377,8 +377,6 @@ Package สามารถมีหลาย Binary Crates และมี Libra
 
 **Comparison Languages:** Java / C++ / Python
 
-## 10.1 Comparison Table
-
 | Aspect | Rust | Java | C++ | Python |
 |---|---|---|---|---|
 | **Syntax** | ใช้ `mod` ประกาศ Module, `pub` กำหนดการเข้าถึง และ `use` นำ Path เข้ามาใน Scope | ใช้ `package` จัดกลุ่ม Class/Interface และ `import` นำ Class จาก Package อื่นมาใช้ | ใช้ `module`, `export`, `import` ใน C++20 Modules | ไฟล์ `.py` สามารถเป็น Module และใช้ `import` นำ Module อื่นมาใช้ |
@@ -388,11 +386,9 @@ Package สามารถมีหลาย Binary Crates และมี Libra
 | **Safety / Visibility** | Item เป็น Private by Default และใช้ `pub` เมื่อต้องการเปิดให้เข้าถึง | ใช้ `public`, `private`, `protected` | ใช้ `export` เปิด Declaration จาก Module และใช้ `public`, `private`, `protected` ภายใน Class | ไม่มี `pub` แบบ Rust โดยทั่วไปใช้ Convention เช่น `_name` สำหรับ Non-public |
 | **Performance** | Module System ไม่มีผลต่อ Runtime Performance โดยตรง | Package ไม่มีผลต่อ Runtime Performance โดยตรง | Module System ไม่มีผลต่อ Runtime Performance โดยตรง | Module/Package ไม่มีผลต่อ Runtime Performance โดยตรง |
 
-> **หมายเหตุ:** ตารางนี้เปรียบเทียบในบริบทของ **Modules, Packages & Crates** ไม่ได้เปรียบเทียบความสามารถทั้งหมดของแต่ละภาษา
-
 ---
 
-## 10.2 Rust Example
+## Rust Example
 
 ```rust
 mod food {
@@ -424,7 +420,7 @@ Package
 
 ---
 
-## 10.3 Java Example
+## Java Example
 
 ### Food.java
 
@@ -468,7 +464,7 @@ Package: food
 
 ---
 
-## 10.4 C++ Example
+## C++ Example
 
 ตัวอย่างนี้ใช้ **C++20 Modules**
 
@@ -517,7 +513,7 @@ main.cpp
 
 ---
 
-## 10.5 Python Example
+## Python Example
 
 ### food.py
 
@@ -555,7 +551,7 @@ main.py
 
 ---
 
-## 10.6 Code Comparison Summary
+## Code Comparison Summary
 
 | Language | Structure | Visibility | Import / Use | Call |
 |---|---|---|---|---|
@@ -566,43 +562,35 @@ main.py
 
 ---
 
-## 10.7 Analysis
+## Analysis
 
-### 1. Structure & Modularity
-
-แต่ละภาษาใช้โครงสร้างในการแบ่งและจัดกลุ่ม Code แตกต่างกัน
+### 1. Structure
 
 - **Rust** → Package → Crate → Module
 - **Java** → Package → Class/Interface
 - **C++** → Module → Exported Declarations
 - **Python** → Package → Module
 
-Rust มีแนวคิด **Crate** เป็นหน่วยสำคัญของโปรแกรม โดย Crate เป็น Tree of Modules และ Package สามารถประกอบด้วยหนึ่งหรือหลาย Crates
-
 **เหตุผลด้านการออกแบบ Rust:**  
+Rust มีแนวคิด **Crate** เป็นหน่วยสำคัญของโปรแกรม โดย Crate เป็น Tree of Modules และ Package สามารถประกอบด้วยหนึ่งหรือหลาย Crates
 เพื่อให้สามารถแบ่ง Functionality ที่เกี่ยวข้องออกเป็นส่วนต่าง ๆ และช่วยจัดโครงสร้างของโปรแกรมเมื่อโปรแกรมมีขนาดใหญ่ขึ้น
 
 ---
 
 ### 2. Scope & Visibility
 
-แต่ละภาษาใช้วิธีควบคุมการเข้าถึง Code แตกต่างกัน
-
 - **Rust** → Item เป็น Private by Default และใช้ `pub` เพื่อเปิดการเข้าถึง
 - **Java** → ใช้ `public`, `private`, `protected`
 - **C++** → ใช้ `export` เพื่อเปิด Declaration จาก Module และใช้ Access Specifiers ภายใน Class
 - **Python** → ไม่มี `pub` แบบ Rust และมักใช้ Convention เช่น `_name`
 
-Rust จึงทำให้การกำหนด **Public Interface และ Private Implementation** เป็นส่วนสำคัญของ Module System
-
 **เหตุผลด้านการออกแบบ Rust:**  
-เพื่อสนับสนุน **Encapsulation** โดยซ่อน Implementation Details และเปิดเผยเฉพาะส่วนที่ต้องการให้ Code ภายนอกใช้งาน
+Rust จึงทำให้การกำหนด **Public Interface และ Private Implementation** เป็นส่วนสำคัญของ Module System
+ เพื่อสนับสนุน **Encapsulation** โดยซ่อน Implementation Details และเปิดเผยเฉพาะส่วนที่ต้องการให้ Code ภายนอกใช้งาน
 
 ---
 
 ### 3. Syntax & Organization
-
-แต่ละภาษาใช้ Syntax สำหรับจัดโครงสร้าง Code แตกต่างกัน
 
 - **Rust** → `mod`, `pub`, `use`
 - **Java** → `package`, `import`
@@ -623,9 +611,7 @@ Rust จึงทำให้การกำหนด **Public Interface แล�
 
 ### 4. Key Difference / Language Design
 
-Rust ออกแบบ Module System โดยเน้น
-
-**Modularity + Scope + Privacy + Encapsulation**
+Rust ออกแบบ Module System โดยเน้น **Modularity + Scope + Privacy + Encapsulation**
 
 Rust สามารถแบ่ง Code เป็น
 
