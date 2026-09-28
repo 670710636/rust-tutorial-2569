@@ -384,7 +384,6 @@ Package สามารถมีหลาย Binary Crates และมี Libra
 | **Type System** | Module สามารถเก็บ Item เช่น Function, Struct และ Enum แต่ Module System ไม่ได้กำหนด Type System โดยตรง | Package จัดกลุ่ม Class และ Interface | Module สามารถประกอบด้วย Function, Class และ Type | Module สามารถเก็บ Function และ Class |
 | **Memory Management** | Module System ไม่จัดการ Memory โดยตรง | Package ไม่จัดการ Memory โดยตรง | Module ไม่จัดการ Memory โดยตรง | Module/Package ไม่จัดการ Memory โดยตรง |
 | **Safety / Visibility** | Item เป็น Private by Default และใช้ `pub` เมื่อต้องการเปิดให้เข้าถึง | ใช้ `public`, `private`, `protected` | ใช้ `export` เปิด Declaration จาก Module และใช้ `public`, `private`, `protected` ภายใน Class | ไม่มี `pub` แบบ Rust โดยทั่วไปใช้ Convention เช่น `_name` สำหรับ Non-public |
-| **Performance** | Module System ไม่มีผลต่อ Runtime Performance โดยตรง | Package ไม่มีผลต่อ Runtime Performance โดยตรง | Module System ไม่มีผลต่อ Runtime Performance โดยตรง | Module/Package ไม่มีผลต่อ Runtime Performance โดยตรง |
 
 ---
 
