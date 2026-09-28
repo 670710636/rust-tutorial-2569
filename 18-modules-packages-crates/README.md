@@ -123,79 +123,65 @@ Absolute Path เริ่มจาก Crate Root (ไล่หาตั้ง�
 
 ### 9.3 Type System
 
-Rust เป็นภาษาแบบ **Static Typing** ซึ่ง Type จะถูกตรวจสอบในช่วง **Compile Time** ก่อนที่โปรแกรมจะทำงาน
+Rust ใช้ **Lexical Scope** หรือ **Static Scope** ซึ่งขอบเขตของชื่อสามารถพิจารณาได้จากโครงสร้างของ Source Code
 
-สำหรับ **Modules, Packages และ Crates** นั้น Module System ไม่ได้เป็น Type System โดยตรง แต่ทำงานร่วมกับ Type System โดยช่วยกำหนด Scope และ Visibility ของ Type และ Item ต่าง ๆ
+Module แต่ละตัวสร้าง Scope ของตัวเอง และ Item ภายใน Module จะเป็น **Private โดย Default**
 
-ตัวอย่าง:
+ตัวอย่าง
 
 ```rust
-mod user {
-    pub struct User {
-        pub name: String,
+mod food {
+    fn order() {
+        println!("Order: Pizza");
+    }
+}
+```
+
+`order()` เป็น Private จึงไม่สามารถเรียกจากภายนอก `food` ได้โดยตรง
+
+หากต้องการเปิดให้ภายนอกเข้าถึง ต้องใช้ `pub`
+
+```rust
+mod food {
+    pub fn order() {
+        println!("Order: Pizza");
     }
 }
 
 fn main() {
-    let u = user::User {
-        name: String::from("Alice"),
-    };
-
-    println!("{}", u.name);
+    food::order();
 }
 ```
 
-จากตัวอย่าง
-
-- `User` เป็น `struct` ที่สร้าง Type ขึ้นมา
-- `name` มี Type เป็น `String`
-- `pub struct User` ทำให้ Type `User` สามารถเข้าถึงจากภายนอก Module `user`
-- `pub name` ทำให้ Field `name` สามารถเข้าถึงจากภายนอกได้
-- Compiler ตรวจสอบทั้งความถูกต้องของ Type และการเข้าถึง Item
-
-ดังนั้น **Type System** ทำหน้าที่ตรวจสอบความถูกต้องของ Type ส่วน **Module System และ Visibility** ช่วยควบคุมว่าส่วนใดของโปรแกรมสามารถมองเห็นและใช้งาน Type หรือ Item นั้นได้
+ดังนั้น `pub` เป็นกลไกสำคัญที่ใช้ควบคุมขอบเขตการมองเห็นของ Item ภายใน Module
 
 ---
 
 ### 9.4 Memory / Resource Management
 
-**Packages, Crates และ Modules ไม่ได้ทำหน้าที่จัดการ Memory โดยตรง** แต่ Code ที่อยู่ภายใน Module ยังคงทำงานภายใต้กฎการจัดการ Memory ของ Rust
+Rust ใช้ Path เพื่อระบุว่าแต่ละชื่ออ้างถึง Item ใดภายใน Module Tree
 
-Rust ใช้แนวคิดสำคัญในการจัดการ Memory ได้แก่
-
-- **Ownership** — กำหนดว่า Value ใดมีตัวแปรใดเป็นเจ้าของ
-- **Borrowing** — อนุญาตให้ยืม Value ไปใช้งานโดยไม่จำเป็นต้องย้าย Ownership
-- **References** — ใช้อ้างอิง Value เช่น `&String`
-- เมื่อ Value หมด Scope ทรัพยากรที่ Value นั้นเป็นเจ้าของจะถูกปล่อยตามกฎของ Rust
-
-ตัวอย่าง:
+ตัวอย่าง
 
 ```rust
-mod message {
-    pub fn show(text: &String) {
-        println!("{}", text);
-    }
-}
+food::order();
+```
+
+ชื่อ `food` จะถูก Resolve ไปยัง Module `food` และ `order` จะถูก Resolve ไปยัง Function `order()` ภายใน Module นั้น
+
+สามารถใช้ `use` เพื่อนำ Path เข้ามาใน Scope และสร้างชื่อที่เรียกใช้งานได้สั้นลง
+
+```rust
+use crate::food;
 
 fn main() {
-    let text = String::from("Hello");
-
-    message::show(&text);
-
-    println!("{}", text);
+    food::order();
 }
 ```
 
-Function `show()` อยู่ภายใน Module `message` และรับ Parameter เป็น `&String` ซึ่งเป็น Reference
-
-`message::show(&text)` จึงเป็นการ Borrow ข้อมูลแทนการย้าย Ownership เข้าไปใน Function
-
-หลังจาก Function `show()` ทำงานเสร็จ Ownership ของ `text` ยังคงอยู่ใน `main()` ทำให้สามารถใช้ `text` ต่อได้
-
-ดังนั้นการแบ่ง Code เป็น Module ไม่ได้เปลี่ยนกฎของ Ownership และ Borrowing แต่ช่วยจัดโครงสร้างของ Code ที่ใช้กฎเหล่านี้ให้ชัดเจนขึ้น
+`use` ไม่ได้ย้ายหรือคัดลอก Function แต่ทำให้ Path ที่ระบุสามารถถูกอ้างถึงด้วยชื่อที่สั้นลงภายใน Scope นั้น
 
 ---
-
 ### 9.5 Abstraction / Other PPL Concepts
 
 Modules, Packages และ Crates เกี่ยวข้องกับแนวคิดทาง PPL หลายด้าน ได้แก่ **Abstraction, Scope, Visibility และ Namespace**
