@@ -55,6 +55,7 @@ Rust มี Syntax ที่ใช้ในการสร้าง Module แ�
 - `crate` ใช้อ้างถึง Crate ปัจจุบัน
 - `super` ใช้อ้างถึง Parent Module
 - `self` ใช้อ้างถึง Module ปัจจุบัน
+-  `::` ใช้แบ่งระดับของ Path เพื่อระบุตำแหน่งของ Module หรือ Item
 
 ตัวอย่าง:
 
