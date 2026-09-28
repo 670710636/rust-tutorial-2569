@@ -88,26 +88,39 @@ fn main() {
 
 ### 9.2 Semantics
 
-ใน Rust **Package, Crate และ Module** มีความหมายและหน้าที่แตกต่างกัน
-
-- **Package** คือหน่วยของ Cargo Project ใช้สำหรับจัดการโปรเจกต์และรวบรวม Crate ที่เกี่ยวข้อง
-- **Crate** คือหน่วยของโปรแกรมที่ Rust Compiler นำไป Compile โดยสามารถเป็น **Binary Crate** หรือ **Library Crate**
-- **Module** ใช้แบ่งและจัดกลุ่ม Code ภายใน Crate รวมถึงช่วยสร้าง Namespace
-- **Item** คือสิ่งที่สามารถอยู่ภายใน Module เช่น Function, Struct, Enum หรือ Constant
-
-ตัวอย่าง Path:
+Package, Crate และ Module มีหน้าที่แตกต่างกันในการจัดโครงสร้างโปรแกรม Rust
 
 ```text
-crate::food::order
+Package
+└── Crate
+    └── Module
+        └── Item
 ```
 
-สามารถอธิบายได้ว่า
+- **Package** เป็นหน่วยที่ Cargo ใช้สำหรับจัดการ Build, Test และ Share Crates
+- **Crate** เป็นหน่วยของโปรแกรมที่ประกอบด้วย Module Tree และสามารถสร้างเป็น Library หรือ Executable
+- **Module** ใช้จัดกลุ่มโค้ดภายใน Crate และควบคุม Scope และ Privacy
+- **Path** ใช้ระบุตำแหน่งของ Item ภายใน Module Tree
 
-1. `crate` เริ่มต้นจาก Crate ปัจจุบัน
-2. `food` คือ Module ภายใน Crate
-3. `order` คือ Item ที่อยู่ภายใน Module `food`
+ตัวอย่างเช่น
 
-ดังนั้น Package และ Crate ช่วยกำหนดโครงสร้างระดับ Project และ Compilation ส่วน Module ช่วยแบ่ง Code ภายใน Crate ออกเป็นหมวดหมู่และกำหนดวิธีเข้าถึง Item ต่าง ๆ
+```rust
+food::order();
+```
+
+`food` คือ Module และ `order` คือ Function ที่อยู่ภายใน Module นั้น
+
+Rust รองรับทั้ง **Absolute Path** และ **Relative Path**
+
+```rust
+crate::food::order();  // Absolute Path
+food::order();         // Relative Path
+```
+
+Absolute Path เริ่มจาก Crate Root ส่วน Relative Path เริ่มจาก Module หรือ Scope ปัจจุบัน
+
+---
+
 
 ---
 
