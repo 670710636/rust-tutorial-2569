@@ -54,6 +54,40 @@ Module System ของ Rust ประกอบด้วยแนวคิดส
 
 ---
 
+### Runable Code Example
+
+ตัวอย่างต่อไปนี้แสดงการทำงานของ Modules, Visibility, `pub`, `use`,
+Package, Crate และการจัดโครงสร้างโปรเจกต์ในภาษา Rust
+
+ตัวอย่างทั้งหมดใช้โปรเจกต์ `modules_demo` และสามารถนำไปทดลองรัน
+เพื่อดูผลลัพธ์ได้จริง
+
+## Example 1 — Module, Visibility และ `pub`
+
+ตัวอย่างนี้แสดงวิธีสร้าง Module และกำหนดว่า Function ใดสามารถ
+ถูกเรียกใช้งานจากภายนอก Module ได้
+
+ Code ตัวอย่าง
+
+```rust
+mod calculator {
+    pub fn add(a: i32, b: i32) -> i32 {
+        a + b
+    }
+
+    fn secret_operation(a: i32, b: i32) -> i32 {
+        a * b
+    }
+}
+
+fn main() {
+    let result = calculator::add(10, 20);
+
+    println!("Result = {}", result);
+}
+
+---
+
 ### 9.1 Syntax
 
 Rust มี Syntax หลักที่เกี่ยวข้องกับ Module System ได้แก่ `mod`, `pub`, `use` และ Path
