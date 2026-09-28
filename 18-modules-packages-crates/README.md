@@ -41,19 +41,6 @@
 
 ---
 
-## 9. PPL Perspective
-
-ในมุมมองของ **Principles of Programming Languages (PPL)** ระบบ Module ของ Rust ช่วยจัดโครงสร้างโปรแกรมขนาดใหญ่ โดยสามารถจัดกลุ่ม Functionality ที่เกี่ยวข้อง แยกส่วนของ Code ที่มีหน้าที่แตกต่างกัน และกำหนดว่าส่วนใดของโปรแกรมสามารถเข้าถึงได้จากภายนอก
-
-Module System ของ Rust ประกอบด้วยแนวคิดสำคัญ ได้แก่
-
-- **Packages** — เป็นความสามารถของ Cargo ที่ใช้ Build, Test และ Share Crates
-- **Crates** — เป็น Tree ของ Modules ที่สามารถสร้างเป็น Library หรือ Executable
-- **Modules และ `use`** — ใช้ควบคุม Organization, Scope และ Privacy ของ Paths
-- **Paths** — ใช้ระบุตำแหน่งหรือชื่อของ Item เช่น Function, Struct หรือ Module
-
----
-
 ### Runable Code Example
 
 ตัวอย่างต่อไปนี้แสดงการทำงานของ Modules, Visibility, `pub`, `use`,
@@ -85,6 +72,19 @@ fn main() {
 
     println!("Result = {}", result);
 }
+
+---
+
+## 9. PPL Perspective
+
+ในมุมมองของ **Principles of Programming Languages (PPL)** ระบบ Module ของ Rust ช่วยจัดโครงสร้างโปรแกรมขนาดใหญ่ โดยสามารถจัดกลุ่ม Functionality ที่เกี่ยวข้อง แยกส่วนของ Code ที่มีหน้าที่แตกต่างกัน และกำหนดว่าส่วนใดของโปรแกรมสามารถเข้าถึงได้จากภายนอก
+
+Module System ของ Rust ประกอบด้วยแนวคิดสำคัญ ได้แก่
+
+- **Packages** — เป็นความสามารถของ Cargo ที่ใช้ Build, Test และ Share Crates
+- **Crates** — เป็น Tree ของ Modules ที่สามารถสร้างเป็น Library หรือ Executable
+- **Modules และ `use`** — ใช้ควบคุม Organization, Scope และ Privacy ของ Paths
+- **Paths** — ใช้ระบุตำแหน่งหรือชื่อของ Item เช่น Function, Struct หรือ Module
 
 ---
 
