@@ -39,6 +39,8 @@
 
 *โครงสร้างเอกสารฉบับเต็ม (Key Concepts, Runnable Code Examples, Common Mistakes, Exercises, PPL Perspective, Rust vs Other Language, References, AI Usage Declaration, GitHub Contribution, Final Checklist) ให้ทำต่อจากจุดนี้ตาม Template หลักของวิชา (`rust_tutorial_template.md`) ที่แนบมากับใบมอบหมายงาน*
 
+---
+
 ## 9. PPL Perspective
 
 ในมุมมองของ **Principles of Programming Languages (PPL)** แนวคิด **Packages, Crates และ Modules** ของ Rust ช่วยจัดโครงสร้างโปรแกรม กำหนดขอบเขตของชื่อ (Scope / Namespace) และควบคุมการเข้าถึงส่วนต่าง ๆ ของโปรแกรมอย่างชัดเจน
@@ -271,4 +273,8 @@ Rust ใช้ **Package, Crate และ Module System** เพื่อช่�
 - **Maintainability** — Package, Crate และ Module ช่วยจัดโปรแกรมขนาดใหญ่ให้เป็นส่วนย่อย ทำให้ Code อ่าน แก้ไข และดูแลได้ง่ายขึ้น
 - **Compile-time Checking** — Compiler สามารถตรวจสอบ Path, Visibility และการเข้าถึง Item ก่อนที่โปรแกรมจะทำงาน
 
-ดังนั้น **Package, Crate และ Module System** ของ Rust ไม่ได้มีหน้าที่เพียงจัดไฟล์หรือแบ่ง Code เท่านั้น แต่ยังช่วยสร้าง **Abstraction, Scope, Namespace และ Visibility** ที่ชัดเจน และช่วยให้ Compiler สามารถตรวจพบข้อผิดพลาดหลายอย่างได้ตั้งแต่ Compile Timำ
+ดังนั้น **Package, Crate และ Module System** ของ Rust ไม่ได้มีหน้าที่เพียงจัดไฟล์หรือแบ่ง Code เท่านั้น แต่ยังช่วยสร้าง **Abstraction, Scope, Namespace และ Visibility** ที่ชัดเจน และช่วยให้ Compiler สามารถตรวจพบข้อผิดพลาดหลายอย่างได้ตั้งแต่ Compile Time
+
+---
+
+
