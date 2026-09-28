@@ -77,7 +77,7 @@ fn main() {
 ```
 Result = 30
 ```
-#### โดยจะอธิบายทีละขั้นดังนี้
+#### โดยอธิบายทีละส่วนดังนี้
 
 คำสั่ง *mod*
 ```rust
@@ -109,7 +109,7 @@ calculator::add(10, 20)
 - ไม่มี `pub` → เป็น private โดยค่าเริ่มต้น
 - `::` → ใช้เข้าถึงสิ่งต่าง ๆ ผ่าน Module Path
 
-### ภาพรวมของ Example 1
+#### ภาพรวมของ Example 1
 
 ```text
 calculator
@@ -122,7 +122,86 @@ calculator
        ↑
        └── เป็น private
 ```
---
+
+### Example 2 — การใช้ `use` กับหลาย Module
+
+ตัวอย่างนี้แสดงการแบ่งโปรแกรมออกเป็นหลาย Module
+และการใช้คำสั่ง `use` เพื่อนำ Function จาก Module อื่นมาใช้งาน
+
+#### โครงสร้างโปรเจกต์
+
+```text
+modules_demo/
+├── main.rs
+├── calculator.rs
+└── utils.rs
+```
+
+ในตัวอย่าง Project `modules_demo` นี้แบ่ง Code ออกเป็น 3 ไฟล์
+
+- main.rs → โปรแกรมหลัก
+- calculator.rs → Function สำหรับการคำนวณ
+- utils.rs → Function สำหรับงานทั่วไป
+
+#### calculator.rs
+```rust
+pub fn add(a: i32, b: i32) -> i32 {
+    a + b
+}
+
+pub fn subtract(a: i32, b: i32) -> i32 {
+    a - b
+}
+
+pub fn multiply(a: i32, b: i32) -> i32 {
+    a * b
+}
+
+pub fn divide(a: i32, b: i32) -> f64 {
+    a as f64 / b as f64
+}
+```
+
+#### utils.rs
+```rust
+pub fn print_title(title: &str) {
+    println!("====================");
+    println!("{}", title);
+    println!("====================");
+}
+```
+
+#### main.rs
+```rust
+mod calculator;
+mod utils;
+
+use calculator::{add, subtract, multiply, divide};
+use utils::print_title;
+
+fn main() {
+    print_title("Rust Modules Demo");
+
+    let a = 20;
+    let b = 10;
+
+    println!("Addition: {}", add(a, b));
+    println!("Subtraction: {}", subtract(a, b));
+    println!("Multiplication: {}", multiply(a, b));
+    println!("Division: {}", divide(a, b));
+}
+```
+
+ผลลัพธ์ที่คาดว่าจะได้
+```
+====================
+Rust Modules Demo
+====================
+Addition: 30
+Subtraction: 10
+Multiplication: 200
+Division: 2
+```
 
 ---
 
