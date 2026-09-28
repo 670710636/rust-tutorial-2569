@@ -43,26 +43,35 @@
 
 ## 9. PPL Perspective
 
-ในมุมมองของ **Principles of Programming Languages (PPL)** แนวคิด **Packages, Crates และ Modules** ของ Rust ช่วยจัดโครงสร้างโปรแกรม กำหนดขอบเขตของชื่อ (Scope / Namespace) และควบคุมการเข้าถึงส่วนต่าง ๆ ของโปรแกรมอย่างชัดเจน
+ในมุมมองของ **Principles of Programming Languages (PPL)** ระบบ Module ของ Rust ช่วยจัดโครงสร้างโปรแกรมขนาดใหญ่ โดยสามารถจัดกลุ่ม Functionality ที่เกี่ยวข้อง แยกส่วนของ Code ที่มีหน้าที่แตกต่างกัน และกำหนดว่าส่วนใดของโปรแกรมสามารถเข้าถึงได้จากภายนอก
+
+Module System ของ Rust ประกอบด้วยแนวคิดสำคัญ ได้แก่
+
+- **Packages** — เป็นความสามารถของ Cargo ที่ใช้ Build, Test และ Share Crates
+- **Crates** — เป็น Tree ของ Modules ที่สามารถสร้างเป็น Library หรือ Executable
+- **Modules และ `use`** — ใช้ควบคุม Organization, Scope และ Privacy ของ Paths
+- **Paths** — ใช้ระบุตำแหน่งหรือชื่อของ Item เช่น Function, Struct หรือ Module
+
+---
 
 ### 9.1 Syntax
 
-Rust มี Syntax ที่ใช้ในการสร้าง Module และกำหนดการเข้าถึง Item ต่าง ๆ ภายใน Module ได้แก่
+Rust มี Syntax หลักที่เกี่ยวข้องกับ Module System ได้แก่ `mod`, `pub`, `use` และ Path
 
 - `mod` ใช้ประกาศ Module
 - `pub` ใช้กำหนดให้ Item สามารถเข้าถึงจากภายนอกได้
-- `use` ใช้นำชื่อหรือ Path เข้ามาใน Scope ปัจจุบัน
-- `crate` ใช้อ้างถึง Crate ปัจจุบัน
+- `use` ใช้นำ Path เข้ามาใน Scope เพื่อให้เรียกใช้งานได้สะดวกขึ้น
+- `crate` ใช้อ้างถึง Crate Root ของ Crate ปัจจุบัน
 - `super` ใช้อ้างถึง Parent Module
 - `self` ใช้อ้างถึง Module ปัจจุบัน
--  `::` ใช้แบ่งระดับของ Path เพื่อระบุตำแหน่งของ Module หรือ Item
+- `::` ใช้แบ่งระดับของ Path
 
 ตัวอย่าง:
 
 ```rust
 mod food {
     pub fn order() {
-        println!("Order food");
+        println!("Order: Pizza");
     }
 }
 
@@ -76,13 +85,10 @@ fn main() {
 ในตัวอย่างนี้
 
 - `mod food` สร้าง Module ชื่อ `food`
-- `pub fn order()` กำหนดให้ Function `order()` สามารถเข้าถึงจากภายนอก Module ได้
-- `use crate::food::order` นำ Function `order` เข้ามาใน Scope ปัจจุบัน
-    - use → นำชื่อเข้ามาใน Scope ปัจจุบัน
-    - crate → เริ่มค้นหาจาก Crate ปัจจุบัน
-    - food → Module ชื่อ food
-    - order → Item ที่อยู่ใน food เช่น Function order()
-- `order()` จึงสามารถถูกเรียกใช้ใน `main()` ได้โดยไม่ต้องเขียน Path เต็ม
+- `pub fn order()` ทำให้ Function `order()` สามารถเข้าถึงจากภายนอก Module ได้
+- `use crate::food::order` นำ Path ของ Function `order()` เข้ามาใน Scope ปัจจุบัน
+- `crate` หมายถึงเริ่ม Path จาก Crate Root
+- หลังจากใช้ `use` แล้ว สามารถเรียก `order()` ได้โดยไม่ต้องเขียน Path เต็ม
 
 ---
 
@@ -92,54 +98,117 @@ Package, Crate และ Module มีหน้าที่แตกต่าง
 
 ```text
 Package
-└── Crate
-    └── Module
-        └── Item
+├── Binary Crate(s)
+│   └── Module Tree
+│       └── Item(s)
+│
+└── Library Crate (optional)
+    └── Module Tree
+        └── Item(s)
 ```
 
-- **Package** เป็นหน่วยที่ Cargo ใช้สำหรับจัดการ Build, Test และ Share Crates
-- **Crate** เป็นหน่วยของโปรแกรมที่ประกอบด้วย Module Tree และสามารถสร้างเป็น Library หรือ Executable
-- **Module** ใช้จัดกลุ่มโค้ดภายใน Crate และควบคุม Scope และ Privacy
-- **Path** ใช้ระบุตำแหน่งของ Item ภายใน Module Tree
+#### Package
 
-ตัวอย่างเช่น
+**Package** เป็นความสามารถของ Cargo ที่ใช้สำหรับ Build, Test และ Share Crates
+
+Package ประกอบด้วยไฟล์ `Cargo.toml` ที่อธิบายวิธี Build Crates ภายใน Package
+
+Package สามารถมี
+
+- Binary Crates ได้หลายตัว
+- Library Crate ได้ไม่เกินหนึ่งตัว
+- ต้องมีอย่างน้อยหนึ่ง Crate
+
+#### Crate
+
+**Crate** เป็นหน่วยของโปรแกรม Rust ที่ประกอบด้วย Tree ของ Modules และสามารถสร้างเป็น
+
+- Binary Crate — โปรแกรมที่สามารถ Execute ได้
+- Library Crate — Code ที่ออกแบบมาให้โปรแกรมอื่นนำไปใช้
+
+Crate Root คือ Source File ที่ Rust Compiler ใช้เป็นจุดเริ่มต้นในการสร้าง Root Module ของ Crate
+
+#### Module
+
+**Module** ใช้จัดกลุ่ม Code ภายใน Crate และช่วยควบคุม
+
+- Organization
+- Scope
+- Privacy
+
+Module สามารถมี Item ต่าง ๆ เช่น Function, Struct, Enum และ Module อื่นอยู่ภายในได้
+
+#### Path
+
+**Path** เป็นวิธีที่ Rust ใช้ระบุตำแหน่งของ Item ภายใน Module Tree
+
+ตัวอย่าง:
 
 ```rust
 food::order();
 ```
 
-`food` คือ Module และ `order` คือ Function ที่อยู่ภายใน Module นั้น
+`food::order()` หมายถึง การเข้าไปที่ Module `food` แล้วเรียกใช้ Function `order()` ที่อยู่ภายใน Module นั้น
 
-Rust รองรับทั้ง **Absolute Path** และ **Relative Path**
+Rust รองรับ Path สองรูปแบบหลัก ได้แก่
 
 ```rust
 crate::food::order();  // Absolute Path
 food::order();         // Relative Path
 ```
 
-Absolute Path เริ่มจาก Crate Root (ไล่หาตั้งแต่ข้างบนสุด) ส่วน Relative Path เริ่มจาก Module ปัจจุบัน
+- **Absolute Path** เริ่มจาก Crate Root
+- **Relative Path** เริ่มจาก Module ปัจจุบัน
+
+Relative Path ยังสามารถใช้ `self` และ `super` เพื่ออ้างอิงตำแหน่งภายใน Module Tree ได้
 
 ---
 
 ### 9.3 Type System
 
-Rust ใช้ **Lexical Scope** หรือ **Static Scope** ซึ่งขอบเขตของชื่อสามารถพิจารณาได้จากโครงสร้างของ Source Code
+หัวข้อ **Packages, Crates และ Modules** ใน Chapter นี้ไม่ได้มุ่งอธิบาย Type System ของ Rust โดยตรง แต่ Module System สามารถจัดกลุ่ม Item ที่มี Type ต่าง ๆ เช่น Struct, Enum และ Function ไว้ภายใน Module ได้
 
-Module แต่ละตัวสร้าง Scope ของตัวเอง และ Item ภายใน Module จะเป็น **Private โดย Default**
-
-ตัวอย่าง
+ตัวอย่าง:
 
 ```rust
 mod food {
-    fn order() {
+    pub struct Menu {
+        pub name: String,
+    }
+
+    pub fn order() {
         println!("Order: Pizza");
     }
 }
 ```
 
-`order()` เป็น Private จึงไม่สามารถเรียกจากภายนอก `food` ได้โดยตรง
+Module `food` สามารถประกอบด้วย Item หลายประเภท เช่น
 
-หากต้องการเปิดให้ภายนอกเข้าถึง ต้องใช้ `pub`
+```text
+food
+├── Struct: Menu
+└── Function: order()
+```
+
+ดังนั้นในบริบทของหัวข้อนี้ **Module ไม่ได้กำหนด Type System ของ Rust** แต่ทำหน้าที่จัดกลุ่มและกำหนดขอบเขตของ Item ต่าง ๆ ภายในโปรแกรม
+
+Compiler จะต้องสามารถระบุได้ว่าชื่อที่อยู่ใน Scope นั้นหมายถึง Item ใด เช่น Variable, Function, Struct, Enum, Module หรือ Item ประเภทอื่น
+
+---
+
+### 9.4 Memory / Resource Management
+
+หัวข้อ **Packages, Crates และ Modules** ไม่ได้เป็นกลไกสำหรับจัดการ Memory โดยตรง
+
+หน้าที่หลักของ Module System คือการจัดการ
+
+- Organization
+- Scope
+- Privacy
+- Paths
+- Public และ Private Interface
+
+ตัวอย่าง:
 
 ```rust
 mod food {
@@ -153,37 +222,19 @@ fn main() {
 }
 ```
 
-ดังนั้น `pub` เป็นกลไกสำคัญที่ใช้ควบคุมขอบเขตการมองเห็นของ Item ภายใน Module
+Module `food` ทำหน้าที่จัดกลุ่ม Function `order()` และกำหนดว่าส่วนใดสามารถเข้าถึงจากภายนอกได้
+
+ดังนั้นในบริบทของ Chapter นี้ Package, Crate และ Module เน้น **การจัดโครงสร้างและการเข้าถึง Code** มากกว่าการจัดการ Memory หรือ Resource โดยตรง
 
 ---
 
-### 9.4 Memory / Resource Management
-
-Rust ใช้ Path เพื่อระบุว่าแต่ละชื่ออ้างถึง Item ใดภายใน Module Tree
-
-ตัวอย่าง
-
-```rust
-food::order();
-```
-
-โปรแกรมจะเข้าไปหา Module food ก่อน แล้วจึงหาและเรียกใช้ Function order() ที่อยู่ข้างใน Module นั้น
-สามารถใช้ `use` เพื่อนำ Path เข้ามาใน Scope และสร้างชื่อที่เรียกใช้งานได้สั้นลง
-
-```rust
-use crate::food;
-
-fn main() {
-    food::order();
-}
-```
-
-`use` ไม่ได้ย้ายหรือคัดลอก Function แต่ทำให้ Path ที่ระบุสามารถถูกอ้างถึงด้วยชื่อที่สั้นลงภายใน Scope นั้น
-
----
 ### 9.5 Abstraction / Other PPL Concepts
 
-Module ช่วยสร้าง Abstraction โดยรวบรวม Function, Struct, Enum และ Item ที่เกี่ยวข้องไว้ด้วยกัน ผู้ใช้งาน Module สามารถเรียกผ่าน Public Interface โดยไม่จำเป็นต้องรู้รายละเอียด Implementation ภายใน
+#### Abstraction
+
+Module ช่วยให้สามารถรวม Functionality ที่เกี่ยวข้องไว้ในส่วนเดียวกัน และเปิดให้ Code ภายนอกเรียกใช้งานผ่าน Public Interface โดยไม่จำเป็นต้องรู้รายละเอียดการทำงานภายใน
+
+ตัวอย่าง:
 
 ```rust
 mod food {
@@ -196,58 +247,151 @@ mod food {
         println!("Preparing...");
     }
 }
+
+fn main() {
+    food::order();
+}
 ```
 
-ในตัวอย่าง `order()` เป็น Public Interface ที่ภายนอกสามารถเรียกใช้ได้ ส่วน `prepare()` เป็นรายละเอียดภายในที่ถูกซ่อนไว้
+ในตัวอย่างนี้
+
+- `order()` เป็น Public Interface ที่ Code ภายนอกสามารถเรียกใช้งานได้
+- `prepare()` เป็น Implementation Detail ภายใน Module
+
+ผู้ใช้งานเพียงเรียก
+
+```rust
+food::order();
+```
+
+โดยไม่จำเป็นต้องรู้ว่า `order()` เรียก `prepare()` หรือทำงานภายในอย่างไร
 
 #### Encapsulation
 
-Rust Module System รองรับ Encapsulation โดยสามารถกำหนดว่าส่วนใดเป็น Public และส่วนใดเป็น Private
+Module System ช่วย **Encapsulate Implementation Details** หรือซ่อนรายละเอียดการทำงานภายใน
 
 ```text
-food
+Module: food
 ├── order()      → Public
 └── prepare()    → Private
 ```
 
-ทำให้สามารถซ่อน Implementation Detail และเปิดเผยเฉพาะส่วนที่ต้องการให้ผู้ใช้งานเข้าถึง
+Programmer สามารถกำหนดว่าส่วนใดเป็น Public Interface และส่วนใดเป็น Private Implementation Detail
+
+วิธีนี้ช่วยให้สามารถแก้ไขรายละเอียดการทำงานภายในได้ โดย Code ภายนอกยังสามารถเรียก Public Interface เดิมได้
+
+#### Scope
+
+**Scope** คือขอบเขตที่ชื่อของ Item สามารถถูกมองเห็นและนำมาใช้งานได้
+
+ในแต่ละ Scope อาจมีชื่อของ
+
+- Variable
+- Function
+- Struct
+- Enum
+- Module
+- Constant
+- Item อื่น ๆ
+
+Compiler ต้องสามารถระบุได้ว่าชื่อที่ถูกใช้งานในตำแหน่งหนึ่งหมายถึง Item ใด
+
+และไม่สามารถมี Item สองตัวที่มีชื่อเดียวกันอยู่ใน Scope เดียวกันได้โดยตรง
+
+#### Visibility and Privacy
+
+Item ภายใน Module เป็น **Private โดย Default**
+
+ตัวอย่าง:
+
+```rust
+mod food {
+    fn order() {
+        println!("Order: Pizza");
+    }
+}
+```
+
+Function `order()` ไม่สามารถเรียกจากภายนอก Module `food` ได้โดยตรง
+
+หากต้องการให้ภายนอกเข้าถึง ต้องใช้ `pub`
+
+```rust
+mod food {
+    pub fn order() {
+        println!("Order: Pizza");
+    }
+}
+
+fn main() {
+    food::order();
+}
+```
+
+ดังนั้น `pub` ใช้กำหนด Public Interface ของ Module
+
+#### `use` and Scope
+
+`use` ใช้นำ Path เข้ามาใน Scope เพื่อให้สามารถเรียก Item ได้สะดวกขึ้น
+
+จากเดิม:
+
+```rust
+crate::food::order();
+```
+
+สามารถเขียน:
+
+```rust
+use crate::food::order;
+
+fn main() {
+    order();
+}
+```
+
+การใช้ `use` ไม่ได้ย้าย Item ไปยังตำแหน่งใหม่ แต่ทำให้ Path นั้นสามารถถูกอ้างถึงด้วยชื่อที่สะดวกขึ้นภายใน Scope ปัจจุบัน
+
 ---
 
 ### 9.6 Why Rust?
 
-Rust ใช้ **Package, Crate และ Module System** เพื่อช่วยให้โปรแกรมมีโครงสร้างที่ชัดเจน สามารถแบ่ง Code ออกเป็นส่วนย่อย และควบคุมการเข้าถึง Item ต่าง ๆ ได้
+เมื่อโปรแกรมมีขนาดใหญ่ การจัด Organization ของ Code จะมีความสำคัญมากขึ้น
 
-แนวคิดเหล่านี้มีประโยชน์ในด้านต่าง ๆ ดังนี้
+Rust จึงมี Module System ที่ช่วย
 
-- **Safety** — Item ภายใน Module เป็น Private โดย Default และ Programmer ต้องระบุ `pub` เมื่อต้องการเปิดให้ส่วนอื่นเข้าถึง
-- **Reliability** — การแบ่ง Code เป็น Module ช่วยแยกหน้าที่ของแต่ละส่วน และลดการเข้าถึง Implementation ภายในโดยไม่จำเป็น
-- **Maintainability** — Package, Crate และ Module ช่วยจัดโปรแกรมขนาดใหญ่ให้เป็นส่วนย่อย ทำให้ Code อ่าน แก้ไข และดูแลได้ง่ายขึ้น
-- **Compile-time Checking** — Compiler สามารถตรวจสอบ Path, Visibility และการเข้าถึง Item ก่อนที่โปรแกรมจะทำงาน
+- จัดกลุ่ม Functionality ที่เกี่ยวข้องกัน
+- แยก Code ที่มีหน้าที่แตกต่างกัน
+- ระบุตำแหน่งของ Code ที่ต้องการแก้ไขได้ง่ายขึ้น
+- แบ่งโปรแกรมออกเป็นหลาย Modules และหลาย Files
+- กำหนด Public Interface และ Private Implementation Details
+- จัดการ Scope ของชื่อภายในโปรแกรม
 
-ดังนั้น **Package, Crate และ Module System** ของ Rust ไม่ได้มีหน้าที่เพียงจัดไฟล์หรือแบ่ง Code เท่านั้น แต่ยังช่วยสร้าง **Abstraction, Scope, Namespace และ Visibility** ที่ชัดเจน และช่วยให้ Compiler สามารถตรวจพบข้อผิดพลาดหลายอย่างได้ตั้งแต่ Compile Time
+Package สามารถมีหลาย Binary Crates และมี Library Crate ได้ไม่เกินหนึ่งตัว และเมื่อโปรแกรมมีขนาดใหญ่ขึ้น ยังสามารถแยกบางส่วนออกเป็น Crate อื่นและนำมาใช้เป็น External Dependency ได้
+
+ดังนั้นจุดสำคัญของ Module System ใน Rust คือการช่วยจัดการ **Organization, Scope, Privacy, Paths และ Encapsulation** ของโปรแกรมอย่างเป็นระบบ
 
 ---
 
-## 10. Rust vs. Other Languages
+# 10. Rust vs. Other Languages
 
 **Comparison Language:** Java / C / Python
 
 | Aspect | Rust | Java | C | Python |
 |---|---|---|---|---|
-| **Syntax** | ใช้ `mod` เพื่อประกาศ Module, `use` เพื่อนำชื่อจาก Module อื่นเข้ามาใช้ใน Scope และ `pub` เพื่อกำหนดให้ Item สามารถเข้าถึงจากภายนอกได้ ส่วน Package และ Crate ถูกจัดการผ่านโครงสร้างของ Cargo Project | ใช้ `package` เพื่อระบุว่า Class หรือ Interface อยู่ใน Package ใด และใช้ `import` เพื่อนำ Class หรือ Type จาก Package อื่นมาใช้งาน การเข้าถึงควบคุมด้วย `public`, `private`, `protected` เป็นต้น | แบ่งโปรแกรมออกเป็น Source File `.c` และ Header File `.h` ใช้ `#include` เพื่อนำ Declaration จาก Header มาใช้ และใช้ `static` / `extern` เพื่อควบคุม Scope และ Linkage | ไฟล์ `.py` แต่ละไฟล์สามารถเป็น Module และสามารถรวมหลาย Module เป็น Package ใช้ `import` หรือ `from ... import ...` เพื่อนำ Module หรือชื่อมาใช้งาน |
-| **Semantics / Behavior** | Package เป็นหน่วยที่ Cargo ใช้จัดการโปรเจกต์, Crate เป็นหน่วย Compilation และ Module ใช้จัดโครงสร้างและแบ่ง Namespace ภายใน Crate | Package ใช้จัดกลุ่ม Class และ Interface ที่เกี่ยวข้อง และทำหน้าที่เป็น Namespace ของโปรแกรม | ไม่มีระบบ Package หรือ Module แบบ Rust โดยตรง การแบ่งโค้ดอาศัย Source File, Header File และ Linker | Module ใช้จัดกลุ่มโค้ดในแต่ละไฟล์ ส่วน Package ใช้รวม Module ที่เกี่ยวข้องเข้าด้วยกัน |
-| **Type System** | เป็น Static และ Strong Typing โดย Compiler ตรวจสอบ Type ก่อนโปรแกรมทำงาน | เป็น Static และ Strong Typing โดยตรวจสอบ Type ขณะ Compile | เป็น Static Typing โดย Type ของตัวแปรถูกกำหนดและตรวจสอบตอน Compile | เป็น Dynamic Typing โดย Type ถูกกำหนดและตรวจสอบขณะ Runtime |
-| **Memory Management** | ใช้ Ownership และ Borrowing จัดการ Memory โดยไม่ต้องใช้ Garbage Collector | ใช้ Garbage Collector จัดการ Memory อัตโนมัติ | Programmer จัดการ Memory เอง เช่น `malloc()` และ `free()` | ใช้ Automatic Memory Management และ Garbage Collection |
-| **Safety** | Item ภายใน Module เป็น Private โดย Default และต้องใช้ `pub` เมื่อต้องการเปิดให้ภายนอกเข้าถึง นอกจากนี้ Ownership และ Borrowing ยังช่วยเพิ่ม Memory Safety | ใช้ Access Modifiers เช่น `public`, `private`, `protected` เพื่อควบคุมการเข้าถึง และ JVM ช่วยจัดการ Memory | Programmer ต้องรับผิดชอบการจัดการ Memory และการเข้าถึงข้อมูลเป็นหลัก จึงมีโอกาสเกิด Memory Error ได้มากกว่า | มี Automatic Memory Management และ Exception Handling ช่วยลดข้อผิดพลาดบางประเภท แต่ไม่มี Ownership System แบบ Rust |
+| **Syntax** | ใช้ `mod` สร้าง Module, `pub` กำหนด Visibility และ `use` นำ Path เข้ามาใน Scope | ใช้ `package` จัดกลุ่ม Class/Interface และ `import` นำ Class มาใช้ | ใช้ Source File `.c`, Header File `.h` และ `#include` | ไฟล์ `.py` สามารถเป็น Module และใช้ `import` นำ Module มาใช้ |
+| **Semantics / Behavior** | Package จัดการ Crates, Crate เป็น Tree ของ Modules และ Module ใช้ควบคุม Organization, Scope และ Privacy | Package ใช้จัดกลุ่ม Class/Interface และเป็น Namespace | ใช้ Source File, Header File และ Linkage ในการแบ่งโปรแกรม | Module ใช้จัดกลุ่ม Code และ Package สามารถรวมหลาย Modules |
+| **Type System** | Module สามารถประกอบด้วย Item เช่น Function, Struct และ Enum โดย Module System ไม่ได้เป็นตัวกำหนด Type System โดยตรง | Class/Interface เป็นส่วนสำคัญของโครงสร้าง Type ของ Java | Type ถูกประกาศใน Source/Header Files | Function และ Class สามารถอยู่ภายใน Module |
+| **Memory Management** | Package, Crate และ Module ไม่ได้จัดการ Memory โดยตรง แต่ใช้จัด Organization, Scope และ Privacy | Package ไม่ได้เป็นกลไกจัดการ Memory โดยตรง | Source/Header Files ไม่ได้เป็นกลไกจัดการ Memory โดยตรง | Module/Package ไม่ได้เป็นกลไกจัดการ Memory โดยตรง |
+| **Safety / Visibility** | Item เป็น Private โดย Default และใช้ `pub` เมื่อต้องการเปิดให้ภายนอกเข้าถึง | ใช้ Access Modifiers เช่น `public`, `private`, `protected` | ใช้ Scope และ Linkage เช่น `static`, `extern` | ไม่มี `pub` แบบ Rust และมักใช้ Naming Convention เช่น `_name` |
+
+> **หมายเหตุ:** ตารางนี้เน้นเปรียบเทียบในบริบทของ **Modules, Packages & Crates** เพื่อให้สอดคล้องกับหัวข้อของ Tutorial
 
 ---
 
-### Rust Example
-
 ## Code Examples
 
-เพื่อให้เห็นความแตกต่างชัดเจน ตัวอย่างทุกภาษาจะทำงานเหมือนกัน คือสร้างส่วน `food`
-ที่มี `order()` สำหรับแสดงข้อความ:
+เพื่อให้เห็นความแตกต่างชัดเจน ตัวอย่างทุกภาษาจะทำงานเหมือนกัน คือสร้างส่วน `food` ที่มี `order()` สำหรับแสดงข้อความ:
 
 ```text
 Order: Pizza
@@ -375,7 +519,7 @@ main.c
 
 - `.h` ใช้ประกาศ Interface
 - `.c` ใช้เก็บ Implementation
-- `#include` นำเนื้อหาจาก Header มาใช้ใน Translation Unit
+- `#include` ใช้นำเนื้อหาจาก Header มาใช้
 - ไม่มี `mod` และ `pub` แบบ Rust
 
 ---
@@ -428,28 +572,37 @@ main.py
 
 ## Analysis
 
-จากตัวอย่างจะเห็นว่าทั้ง 4 ภาษาใช้แนวคิด **Modularity** เพื่อแบ่งโปรแกรมออกเป็นส่วนย่อยเหมือนกัน แต่ใช้กลไกต่างกัน
+จากตัวอย่างจะเห็นว่าทั้ง 4 ภาษาใช้แนวคิด **Modularity** เพื่อแบ่งโปรแกรมออกเป็นส่วนย่อย แต่ใช้กลไกที่แตกต่างกัน
 
 ```text
 Rust                    Java
 Package                 Package
-└── Crate               └── Class
-    └── Module              └── Method
-        └── Function
+└── Crate               └── Class: Food
+    └── Module: food        └── Method: order()
+        └── Function:
+            order()
 
 
 C                       Python
-Header + Source         Package
-└── Function            └── Module
-                            └── Function / Class
+Header + Source         Module: food.py
+└── Function: order()   └── Function: order()
 ```
 
-**Rust** มี Package, Crate และ Module System เป็นโครงสร้างที่รองรับโดยภาษา และใช้ `pub` ควบคุม Visibility โดย Compiler สามารถตรวจสอบ Scope และการเข้าถึงได้ตั้งแต่ Compile Time
+**Rust** ใช้ Package, Crate และ Module เป็นส่วนสำคัญในการจัด Organization ของโปรแกรม โดย Module และ `use` ช่วยควบคุม Organization, Scope และ Privacy ส่วน Path ใช้ระบุตำแหน่งของ Item ภายใน Module Tree
 
-**Java** เน้น Package และ Class/Interface และใช้ Access Modifier เช่น `public`, `private` และ `protected` เพื่อควบคุมการเข้าถึง
+**Java** ใช้ Package ในการจัดกลุ่ม Class และ Interface และใช้ Access Modifier เพื่อควบคุมการเข้าถึง
 
-**C** ไม่มี Module System แบบ Rust โดยตรง แต่ใช้ Source File, Header File, Scope และ Linkage ในการแบ่ง Interface และ Implementation
+**C** ไม่มี Module System แบบ Rust โดยตรง แต่สามารถแบ่ง Code ออกเป็น Source File และ Header File และใช้ Scope และ Linkage ในการควบคุมการมองเห็นของชื่อ
 
-**Python** ใช้ไฟล์ `.py` เป็น Module และ `import` เพื่อนำ Module มาใช้ แต่ไม่มี Visibility Control ที่บังคับแบบ `pub` ของ Rust โดยมักใช้ Convention เช่น `_name`
+**Python** ใช้ไฟล์ `.py` เป็น Module และใช้ `import` เพื่อนำ Module มาใช้
 
-**ในมุมมอง PPL** จุดเด่นของ Rust คือการจัดการ **Modularity, Namespace, Scope, Visibility** และ **Information Hiding** อย่างเป็นระบบ โดย Package, Crate และ Module ช่วยแบ่งโครงสร้างของโปรแกรม ส่วน pub และ Module Path ช่วยกำหนดการเข้าถึงและขอบเขตของชื่อ ซึ่ง Compiler สามารถตรวจสอบได้ตั้งแต่ Compile Time
+ในมุมมองของ PPL จุดสำคัญของ Rust Module System คือ **Modularity, Scope, Namespace, Visibility, Privacy และ Encapsulation** โดย Programmer สามารถกำหนด Public Interface และซ่อน Private Implementation Details ได้อย่างชัดเจน
+
+เมื่อโปรแกรมมีขนาดใหญ่ขึ้น แนวทางนี้ช่วยจัดกลุ่ม Functionality ที่เกี่ยวข้อง แยก Code ที่มีหน้าที่แตกต่างกัน และทำให้สามารถระบุตำแหน่งของ Code ที่ต้องการแก้ไขได้ง่ายขึ้น
+
+---
+
+## References
+
+- The Rust Programming Language — Packages, Crates, and Modules  
+  https://doc.rust-lang.org/book/ch07-00-managing-growing-projects-with-packages-crates-and-modules.html
