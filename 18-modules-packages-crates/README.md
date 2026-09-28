@@ -41,15 +41,15 @@
 
 ## 9. PPL Perspective
 
-ในมุมมองของ Principles of Programming Languages แนวคิด **Packages, Crates และ Modules** ของ Rust ช่วยจัดโครงสร้างโปรแกรม แบ่งขอบเขตของชื่อ (Namespace) และควบคุมการเข้าถึงส่วนต่าง ๆ ของโปรแกรมอย่างชัดเจน
+ในมุมมองของ **Principles of Programming Languages (PPL)** แนวคิด **Packages, Crates และ Modules** ของ Rust ช่วยจัดโครงสร้างโปรแกรม กำหนดขอบเขตของชื่อ (Scope / Namespace) และควบคุมการเข้าถึงส่วนต่าง ๆ ของโปรแกรมอย่างชัดเจน
 
 ### 9.1 Syntax
 
-Rust มี Syntax สำหรับจัดการ Module และการเข้าถึง Item ภายใน Module เช่น
+Rust มี Syntax ที่ใช้ในการสร้าง Module และกำหนดการเข้าถึง Item ต่าง ๆ ภายใน Module ได้แก่
 
 - `mod` ใช้ประกาศ Module
 - `pub` ใช้กำหนดให้ Item สามารถเข้าถึงจากภายนอกได้
-- `use` ใช้นำ Path เข้ามาใน Scope เพื่อเรียกใช้งานได้สะดวกขึ้น
+- `use` ใช้นำชื่อหรือ Path เข้ามาใน Scope ปัจจุบัน
 - `crate` ใช้อ้างถึง Crate ปัจจุบัน
 - `super` ใช้อ้างถึง Parent Module
 - `self` ใช้อ้างถึง Module ปัจจุบัน
@@ -68,3 +68,207 @@ use crate::food::order;
 fn main() {
     order();
 }
+```
+
+ในตัวอย่างนี้
+
+- `mod food` สร้าง Module ชื่อ `food`
+- `pub fn order()` กำหนดให้ Function `order()` สามารถเข้าถึงจากภายนอก Module ได้
+- `use crate::food::order` นำ Function `order` เข้ามาใน Scope ปัจจุบัน
+    - use → นำชื่อเข้ามาใน Scope ปัจจุบัน
+    - crate → เริ่มค้นหาจาก Crate ปัจจุบัน
+    - food → Module ชื่อ food
+    - order → Item ที่อยู่ใน food เช่น Function order()
+- `order()` จึงสามารถถูกเรียกใช้ใน `main()` ได้โดยไม่ต้องเขียน Path เต็ม
+
+---
+
+### 9.2 Semantics
+
+ใน Rust **Package, Crate และ Module** มีความหมายและหน้าที่แตกต่างกัน
+
+- **Package** คือหน่วยของ Cargo Project ใช้สำหรับจัดการโปรเจกต์และรวบรวม Crate ที่เกี่ยวข้อง
+- **Crate** คือหน่วยของโปรแกรมที่ Rust Compiler นำไป Compile โดยสามารถเป็น **Binary Crate** หรือ **Library Crate**
+- **Module** ใช้แบ่งและจัดกลุ่ม Code ภายใน Crate รวมถึงช่วยสร้าง Namespace
+- **Item** คือสิ่งที่สามารถอยู่ภายใน Module เช่น Function, Struct, Enum หรือ Constant
+
+ตัวอย่าง Path:
+
+```text
+crate::food::order
+```
+
+สามารถอธิบายได้ว่า
+
+1. `crate` เริ่มต้นจาก Crate ปัจจุบัน
+2. `food` คือ Module ภายใน Crate
+3. `order` คือ Item ที่อยู่ภายใน Module `food`
+
+ดังนั้น Package และ Crate ช่วยกำหนดโครงสร้างระดับ Project และ Compilation ส่วน Module ช่วยแบ่ง Code ภายใน Crate ออกเป็นหมวดหมู่และกำหนดวิธีเข้าถึง Item ต่าง ๆ
+
+---
+
+### 9.3 Type System
+
+Rust เป็นภาษาแบบ **Static Typing** ซึ่ง Type จะถูกตรวจสอบในช่วง **Compile Time** ก่อนที่โปรแกรมจะทำงาน
+
+สำหรับ **Modules, Packages และ Crates** นั้น Module System ไม่ได้เป็น Type System โดยตรง แต่ทำงานร่วมกับ Type System โดยช่วยกำหนด Scope และ Visibility ของ Type และ Item ต่าง ๆ
+
+ตัวอย่าง:
+
+```rust
+mod user {
+    pub struct User {
+        pub name: String,
+    }
+}
+
+fn main() {
+    let u = user::User {
+        name: String::from("Alice"),
+    };
+
+    println!("{}", u.name);
+}
+```
+
+จากตัวอย่าง
+
+- `User` เป็น `struct` ที่สร้าง Type ขึ้นมา
+- `name` มี Type เป็น `String`
+- `pub struct User` ทำให้ Type `User` สามารถเข้าถึงจากภายนอก Module `user`
+- `pub name` ทำให้ Field `name` สามารถเข้าถึงจากภายนอกได้
+- Compiler ตรวจสอบทั้งความถูกต้องของ Type และการเข้าถึง Item
+
+ดังนั้น **Type System** ทำหน้าที่ตรวจสอบความถูกต้องของ Type ส่วน **Module System และ Visibility** ช่วยควบคุมว่าส่วนใดของโปรแกรมสามารถมองเห็นและใช้งาน Type หรือ Item นั้นได้
+
+---
+
+### 9.4 Memory / Resource Management
+
+**Packages, Crates และ Modules ไม่ได้ทำหน้าที่จัดการ Memory โดยตรง** แต่ Code ที่อยู่ภายใน Module ยังคงทำงานภายใต้กฎการจัดการ Memory ของ Rust
+
+Rust ใช้แนวคิดสำคัญในการจัดการ Memory ได้แก่
+
+- **Ownership** — กำหนดว่า Value ใดมีตัวแปรใดเป็นเจ้าของ
+- **Borrowing** — อนุญาตให้ยืม Value ไปใช้งานโดยไม่จำเป็นต้องย้าย Ownership
+- **References** — ใช้อ้างอิง Value เช่น `&String`
+- เมื่อ Value หมด Scope ทรัพยากรที่ Value นั้นเป็นเจ้าของจะถูกปล่อยตามกฎของ Rust
+
+ตัวอย่าง:
+
+```rust
+mod message {
+    pub fn show(text: &String) {
+        println!("{}", text);
+    }
+}
+
+fn main() {
+    let text = String::from("Hello");
+
+    message::show(&text);
+
+    println!("{}", text);
+}
+```
+
+Function `show()` อยู่ภายใน Module `message` และรับ Parameter เป็น `&String` ซึ่งเป็น Reference
+
+`message::show(&text)` จึงเป็นการ Borrow ข้อมูลแทนการย้าย Ownership เข้าไปใน Function
+
+หลังจาก Function `show()` ทำงานเสร็จ Ownership ของ `text` ยังคงอยู่ใน `main()` ทำให้สามารถใช้ `text` ต่อได้
+
+ดังนั้นการแบ่ง Code เป็น Module ไม่ได้เปลี่ยนกฎของ Ownership และ Borrowing แต่ช่วยจัดโครงสร้างของ Code ที่ใช้กฎเหล่านี้ให้ชัดเจนขึ้น
+
+---
+
+### 9.5 Abstraction / Other PPL Concepts
+
+Modules, Packages และ Crates เกี่ยวข้องกับแนวคิดทาง PPL หลายด้าน ได้แก่ **Abstraction, Scope, Visibility และ Namespace**
+
+#### Abstraction
+
+Module ช่วยสร้าง **Abstraction** โดยสามารถซ่อนรายละเอียดการทำงานภายใน และเปิดเผยเฉพาะ Item ที่ต้องการให้ส่วนอื่นของโปรแกรมใช้งานผ่าน `pub`
+
+ตัวอย่าง:
+
+```rust
+mod calculator {
+    fn calculate(a: i32, b: i32) -> i32 {
+        a + b
+    }
+
+    pub fn add(a: i32, b: i32) -> i32 {
+        calculate(a, b)
+    }
+}
+```
+
+`calculate()` เป็นรายละเอียดภายในของ Module และไม่ได้ประกาศเป็น `pub` จึงไม่สามารถเรียกใช้โดยตรงจากภายนอกได้
+
+ส่วน `add()` เป็น Public Interface ที่ Code ภายนอกสามารถเรียกใช้งานได้
+
+แนวคิดนี้ทำให้ผู้ใช้งาน Module สนใจเฉพาะสิ่งที่ Module เปิดให้ใช้งาน โดยไม่จำเป็นต้องรู้รายละเอียด Implementation ภายในทั้งหมด
+
+#### Scope
+
+Rust ใช้ **Lexical Scope หรือ Static Scope** ซึ่งขอบเขตของชื่อสามารถพิจารณาได้จากโครงสร้างของ Source Code
+
+แต่ละ Module สามารถมี Scope ของตัวเอง และสามารถใช้ `use` เพื่อนำชื่อจาก Path อื่นเข้ามาใน Scope ปัจจุบัน
+
+ตัวอย่าง:
+
+```rust
+use crate::food::order;
+```
+
+ทำให้ชื่อ `order` สามารถถูกเรียกใช้ใน Scope ปัจจุบันได้โดยไม่ต้องเขียน `crate::food::order` ทุกครั้ง
+
+#### Visibility
+
+Item ภายใน Module เป็น **Private โดย Default**
+
+หากต้องการให้ Code ภายนอกสามารถเข้าถึง Item ได้ จะต้องกำหนด Visibility เช่น `pub`
+
+ตัวอย่าง:
+
+```rust
+pub fn order() {
+    println!("Order food");
+}
+```
+
+`pub` ทำให้ Function `order()` สามารถเข้าถึงได้จากภายนอก Module ตามกฎ Visibility ของ Rust
+
+แนวคิดนี้ช่วยให้ Programmer ควบคุมได้ว่าส่วนใดเป็น Implementation ภายใน และส่วนใดเป็น Public Interface
+
+#### Namespace
+
+Module ทำหน้าที่เป็น **Namespace** ช่วยจัดกลุ่มชื่อและลดปัญหาการใช้ชื่อซ้ำกัน
+
+ตัวอย่าง:
+
+```text
+crate::customer::create
+crate::product::create
+```
+
+ทั้ง Module `customer` และ `product` สามารถมี Function ชื่อ `create` เหมือนกันได้ เพราะ Function ทั้งสองอยู่ภายใต้ Namespace ที่แตกต่างกัน
+
+ดังนั้น Module System ของ Rust จึงสนับสนุนแนวคิดทาง PPL หลายด้าน ทั้ง **Abstraction, Scope, Visibility และ Namespace**
+
+---
+
+### 9.6 Why Rust?
+
+Rust ใช้ **Package, Crate และ Module System** เพื่อช่วยให้โปรแกรมมีโครงสร้างที่ชัดเจน สามารถแบ่ง Code ออกเป็นส่วนย่อย และควบคุมการเข้าถึง Item ต่าง ๆ ได้
+
+แนวคิดเหล่านี้มีประโยชน์ในด้านต่าง ๆ ดังนี้
+
+- **Safety** — Item ภายใน Module เป็น Private โดย Default และ Programmer ต้องระบุ `pub` เมื่อต้องการเปิดให้ส่วนอื่นเข้าถึง
+- **Reliability** — การแบ่ง Code เป็น Module ช่วยแยกหน้าที่ของแต่ละส่วน และลดการเข้าถึง Implementation ภายในโดยไม่จำเป็น
+- **Maintainability** — Package, Crate และ Module ช่วยจัดโปรแกรมขนาดใหญ่ให้เป็นส่วนย่อย ทำให้ Code อ่าน แก้ไข และดูแลได้ง่ายขึ้น
+- **Compile-time Checking** — Compiler สามารถตรวจสอบ Path, Visibility และการเข้าถึง Item ก่อนที่โปรแกรมจะทำงาน
+
+ดังนั้น **Package, Crate และ Module System** ของ Rust ไม่ได้มีหน้าที่เพียงจัดไฟล์หรือแบ่ง Code เท่านั้น แต่ยังช่วยสร้าง **Abstraction, Scope, Namespace และ Visibility** ที่ชัดเจน และช่วยให้ Compiler สามารถตรวจพบข้อผิดพลาดหลายอย่างได้ตั้งแต่ Compile Timำ
