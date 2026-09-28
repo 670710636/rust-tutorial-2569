@@ -117,10 +117,7 @@ crate::food::order();  // Absolute Path
 food::order();         // Relative Path
 ```
 
-Absolute Path เริ่มจาก Crate Root ส่วน Relative Path เริ่มจาก Module หรือ Scope ปัจจุบัน
-
----
-
+Absolute Path เริ่มจาก Crate Root (ไล่หาตั้งแต่ข้างบนสุด) ส่วน Relative Path เริ่มจาก Module ปัจจุบัน
 
 ---
 
