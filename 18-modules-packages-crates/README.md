@@ -379,11 +379,11 @@ Package สามารถมีหลาย Binary Crates และมี Libra
 
 | Aspect | Rust | Java | C++ | Python |
 |---|---|---|---|---|
-| **Syntax** | ใช้ `mod` ประกาศ Module, `pub` กำหนดการเข้าถึง และ `use` นำ Path เข้ามาใน Scope | ใช้ `package` จัดกลุ่ม Class/Interface และ `import` นำ Class จาก Package อื่นมาใช้ | ใช้ `module`, `export`, `import` ใน C++20 Modules | ไฟล์ `.py` สามารถเป็น Module และใช้ `import` นำ Module อื่นมาใช้ |
-| **Semantics / Behavior** | Package → Crate → Module โดย Crate เป็น Tree of Modules | Package → Class/Interface ใช้ Package เป็น Namespace สำหรับจัดกลุ่ม Type | Module ใช้จัดกลุ่มและ Export Declarations ให้ Translation Unit อื่นนำไปใช้ | Package → Module โดย Module ใช้จัดกลุ่ม Function, Class และข้อมูลที่เกี่ยวข้อง |
+| **Syntax** | ใช้ `mod` ประกาศ Module, `pub` กำหนดการเข้าถึง และ `use` นำ Path เข้ามาใน Scope | ใช้ `package` จัดกลุ่ม Class/Interface และ `import` นำ Type จาก Package อื่นมาใช้ | ใช้ `module`, `export`, `import` ใน C++20 Modules | ไฟล์ `.py` สามารถเป็น Module และใช้ `import` นำ Module อื่นมาใช้ |
+| **Semantics / Behavior** | Package → Crate → Module โดย Crate เป็น Tree of Modules | Package ใช้จัดกลุ่ม Related Types และเป็น Namespace | Module ประกอบด้วย Module Units และสามารถ Export Declarations ให้ Translation Unit อื่นใช้ได้ | Package → Module โดย Module ใช้จัดกลุ่ม Function, Class และข้อมูลที่เกี่ยวข้อง |
 | **Type System** | Module สามารถเก็บ Item เช่น Function, Struct และ Enum แต่ Module System ไม่ได้กำหนด Type System โดยตรง | Package จัดกลุ่ม Class และ Interface | Module สามารถประกอบด้วย Function, Class และ Type | Module สามารถเก็บ Function และ Class |
 | **Memory Management** | Module System ไม่จัดการ Memory โดยตรง | Package ไม่จัดการ Memory โดยตรง | Module ไม่จัดการ Memory โดยตรง | Module/Package ไม่จัดการ Memory โดยตรง |
-| **Safety** | Item เป็น Private by Default และใช้ `pub` เมื่อต้องการเปิดให้เข้าถึง | ใช้ `public`, `private`, `protected` | ใช้ `export` เปิด Declaration จาก Module และใช้ `public`, `private`, `protected` ภายใน Class | ไม่มี `pub` แบบ Rust โดยทั่วไปใช้ Convention เช่น `_name` สำหรับ Non-public |
+| **Safety / Visibility** | Item เป็น Private by Default และใช้ `pub` เมื่อต้องการเปิดให้เข้าถึง | ใช้ `public`, `private`, `protected` | ใช้ `export` เปิด Declaration จาก Module และใช้ Access Specifiers ภายใน Class | ไม่มี `pub` แบบ Rust โดยทั่วไปใช้ Convention เช่น `_name` สำหรับ Non-public |
 
 ---
 
