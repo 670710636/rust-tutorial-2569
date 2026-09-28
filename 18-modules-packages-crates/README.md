@@ -375,31 +375,24 @@ Package สามารถมีหลาย Binary Crates และมี Libra
 
 # 10. Rust vs. Other Languages
 
-**Comparison Language:** Java / C / Python
+**Comparison Languages:** Java / C++ / Python
 
-| Aspect | Rust | Java | C | Python |
+## 10.1 Comparison Table
+
+| Aspect | Rust | Java | C++ | Python |
 |---|---|---|---|---|
-| **Syntax** | ใช้ `mod` สร้าง Module, `pub` กำหนด Visibility และ `use` นำ Path เข้ามาใน Scope | ใช้ `package` จัดกลุ่ม Class/Interface และ `import` นำ Class มาใช้ | ใช้ Source File `.c`, Header File `.h` และ `#include` | ไฟล์ `.py` สามารถเป็น Module และใช้ `import` นำ Module มาใช้ |
-| **Semantics / Behavior** | Package จัดการ Crates, Crate เป็น Tree ของ Modules และ Module ใช้ควบคุม Organization, Scope และ Privacy | Package ใช้จัดกลุ่ม Class/Interface และเป็น Namespace | ใช้ Source File, Header File และ Linkage ในการแบ่งโปรแกรม | Module ใช้จัดกลุ่ม Code และ Package สามารถรวมหลาย Modules |
-| **Type System** | Module สามารถประกอบด้วย Item เช่น Function, Struct และ Enum โดย Module System ไม่ได้เป็นตัวกำหนด Type System โดยตรง | Class/Interface เป็นส่วนสำคัญของโครงสร้าง Type ของ Java | Type ถูกประกาศใน Source/Header Files | Function และ Class สามารถอยู่ภายใน Module |
-| **Memory Management** | Package, Crate และ Module ไม่ได้จัดการ Memory โดยตรง แต่ใช้จัด Organization, Scope และ Privacy | Package ไม่ได้เป็นกลไกจัดการ Memory โดยตรง | Source/Header Files ไม่ได้เป็นกลไกจัดการ Memory โดยตรง | Module/Package ไม่ได้เป็นกลไกจัดการ Memory โดยตรง |
-| **Safety / Visibility** | Item เป็น Private โดย Default และใช้ `pub` เมื่อต้องการเปิดให้ภายนอกเข้าถึง | ใช้ Access Modifiers เช่น `public`, `private`, `protected` | ใช้ Scope และ Linkage เช่น `static`, `extern` | ไม่มี `pub` แบบ Rust และมักใช้ Naming Convention เช่น `_name` |
+| **Syntax** | ใช้ `mod` ประกาศ Module, `pub` กำหนดการเข้าถึง และ `use` นำ Path เข้ามาใน Scope | ใช้ `package` จัดกลุ่ม Class/Interface และ `import` นำ Class จาก Package อื่นมาใช้ | ใช้ `module`, `export`, `import` ใน C++20 Modules | ไฟล์ `.py` สามารถเป็น Module และใช้ `import` นำ Module อื่นมาใช้ |
+| **Semantics / Behavior** | Package → Crate → Module โดย Crate เป็น Tree of Modules | Package → Class/Interface ใช้ Package เป็น Namespace สำหรับจัดกลุ่ม Type | Module ใช้จัดกลุ่มและ Export Declarations ให้ Translation Unit อื่นนำไปใช้ | Package → Module โดย Module ใช้จัดกลุ่ม Function, Class และข้อมูลที่เกี่ยวข้อง |
+| **Type System** | Module สามารถเก็บ Item เช่น Function, Struct และ Enum แต่ Module System ไม่ได้กำหนด Type System โดยตรง | Package จัดกลุ่ม Class และ Interface | Module สามารถประกอบด้วย Function, Class และ Type | Module สามารถเก็บ Function และ Class |
+| **Memory Management** | Module System ไม่จัดการ Memory โดยตรง | Package ไม่จัดการ Memory โดยตรง | Module ไม่จัดการ Memory โดยตรง | Module/Package ไม่จัดการ Memory โดยตรง |
+| **Safety / Visibility** | Item เป็น Private by Default และใช้ `pub` เมื่อต้องการเปิดให้เข้าถึง | ใช้ `public`, `private`, `protected` | ใช้ `export` เปิด Declaration จาก Module และใช้ `public`, `private`, `protected` ภายใน Class | ไม่มี `pub` แบบ Rust โดยทั่วไปใช้ Convention เช่น `_name` สำหรับ Non-public |
+| **Performance** | Module System ไม่มีผลต่อ Runtime Performance โดยตรง | Package ไม่มีผลต่อ Runtime Performance โดยตรง | Module System ไม่มีผลต่อ Runtime Performance โดยตรง | Module/Package ไม่มีผลต่อ Runtime Performance โดยตรง |
 
-> **หมายเหตุ:** ตารางนี้เน้นเปรียบเทียบในบริบทของ **Modules, Packages & Crates** เพื่อให้สอดคล้องกับหัวข้อของ Tutorial
-
----
-
-## Code Examples
-
-เพื่อให้เห็นความแตกต่างชัดเจน ตัวอย่างทุกภาษาจะทำงานเหมือนกัน คือสร้างส่วน `food` ที่มี `order()` สำหรับแสดงข้อความ:
-
-```text
-Order: Pizza
-```
+> **หมายเหตุ:** ตารางนี้เปรียบเทียบในบริบทของ **Modules, Packages & Crates** ไม่ได้เปรียบเทียบความสามารถทั้งหมดของแต่ละภาษา
 
 ---
 
-### Rust Example
+## 10.2 Rust Example
 
 ```rust
 mod food {
@@ -413,7 +406,7 @@ fn main() {
 }
 ```
 
-**โครงสร้าง**
+### Structure
 
 ```text
 Package
@@ -422,15 +415,18 @@ Package
         └── Function: order()
 ```
 
-- `mod food` สร้าง Module
-- `pub` ทำให้ `order()` สามารถเรียกจากภายนอก Module ได้
-- `food::order()` เรียก Function ผ่าน Module Path
+### Explanation
+
+- `mod food` ใช้ประกาศ Module ชื่อ `food`
+- `pub fn order()` กำหนดให้ Function `order()` สามารถเข้าถึงจากภายนอก Module ได้
+- `food::order()` เป็น Path ที่ใช้เรียก Function `order()` ภายใน Module `food`
+- Item ภายใน Module เป็น Private by Default หากต้องการให้ภายนอกเข้าถึงต้องใช้ `pub`
 
 ---
 
-### Java Example
+## 10.3 Java Example
 
-**Food.java**
+### Food.java
 
 ```java
 package food;
@@ -442,7 +438,7 @@ public class Food {
 }
 ```
 
-**Main.java**
+### Main.java
 
 ```java
 import food.Food;
@@ -454,7 +450,7 @@ public class Main {
 }
 ```
 
-**โครงสร้าง**
+### Structure
 
 ```text
 Package: food
@@ -462,78 +458,75 @@ Package: food
     └── Method: order()
 ```
 
-- `package food` กำหนด Package
-- `public` กำหนดการเข้าถึง
-- `import food.Food` นำ Class มาใช้
-- `Food.order()` เรียก Method ผ่าน Class
+### Explanation
+
+- `package food` กำหนดให้ Class `Food` อยู่ใน Package `food`
+- `public class Food` ทำให้ Class สามารถเข้าถึงจากภายนอกได้
+- `import food.Food` นำ Class `Food` จาก Package `food` มาใช้
+- `Food.order()` เรียก Method `order()` ผ่าน Class `Food`
+- Java ใช้ Access Modifiers เช่น `public`, `private`, `protected` เพื่อควบคุมการเข้าถึง
 
 ---
 
-### C Example
+## 10.4 C++ Example
 
-**food.h**
+ตัวอย่างนี้ใช้ **C++20 Modules**
 
-```c
-#ifndef FOOD_H
-#define FOOD_H
+### food.cppm
 
-void order(void);
+```cpp
+export module food;
 
-#endif
-```
+import <iostream>;
 
-**food.c**
-
-```c
-#include <stdio.h>
-#include "food.h"
-
-void order(void) {
-    printf("Order: Pizza\n");
+export void order() {
+    std::cout << "Order: Pizza\n";
 }
 ```
 
-**main.c**
+### main.cpp
 
-```c
-#include "food.h"
+```cpp
+import food;
 
-int main(void) {
+int main() {
     order();
     return 0;
 }
 ```
 
-**โครงสร้าง**
+### Structure
 
 ```text
-food.h
-└── Function Declaration
+Module: food
+└── Exported Function: order()
 
-food.c
-└── Function Definition
-
-main.c
-└── Function Call
+main.cpp
+└── import food
+    └── order()
 ```
 
-- `.h` ใช้ประกาศ Interface
-- `.c` ใช้เก็บ Implementation
-- `#include` ใช้นำเนื้อหาจาก Header มาใช้
-- ไม่มี `mod` และ `pub` แบบ Rust
+### Explanation
+
+- `export module food;` ประกาศ Module ชื่อ `food`
+- `export void order()` เปิด Function `order()` ให้ Code ที่ Import Module สามารถเรียกใช้งานได้
+- `import food;` นำ Module `food` มาใช้
+- `order()` เรียก Function ที่ถูก Export จาก Module
+- C++20 Modules ใช้ `export` และ `import` เพื่อควบคุม Interface ระหว่าง Modules
+- `export` ของ Module แตกต่างจาก `public`, `private`, `protected` ซึ่งใช้ควบคุมการเข้าถึง Member ภายใน Class
 
 ---
 
-### Python Example
+## 10.5 Python Example
 
-**food.py**
+### food.py
 
 ```python
 def order():
     print("Order: Pizza")
 ```
 
-**main.py**
+### main.py
 
 ```python
 import food
@@ -541,7 +534,7 @@ import food
 food.order()
 ```
 
-**โครงสร้าง**
+### Structure
 
 ```text
 Module: food.py
@@ -552,57 +545,120 @@ main.py
     └── food.order()
 ```
 
-- `food.py` เป็น Module
-- `import food` นำ Module มาใช้
+### Explanation
+
+- `food.py` เป็น Module ชื่อ `food`
+- `def order()` สร้าง Function `order()`
+- `import food` นำ Module `food` มาใช้
 - `food.order()` เรียก Function ผ่าน Namespace ของ Module
-- ไม่มี `pub` แบบ Rust
+- Python ไม่มี `pub` แบบ Rust โดยทั่วไปใช้ Naming Convention เช่น `_name` เพื่อสื่อว่าเป็น Non-public
 
 ---
 
-## Code Comparison Summary
+## 10.6 Code Comparison Summary
 
-| Language | การแบ่งโปรแกรม | การควบคุมการเข้าถึง | การนำมาใช้ | การเรียก |
+| Language | Structure | Visibility | Import / Use | Call |
 |---|---|---|---|---|
-| **Rust** | `mod food` | `pub` | `use` (เมื่อจำเป็น) | `food::order()` |
-| **Java** | `package food` + `class Food` | `public`, `private`, `protected` | `import food.Food` | `Food.order()` |
-| **C** | `food.h` + `food.c` | Scope / Linkage เช่น `static`, `extern` | `#include "food.h"` | `order()` |
-| **Python** | `food.py` | Convention เช่น `_name` | `import food` | `food.order()` |
+| **Rust** | Package → Crate → Module | Private Default / `pub` | `use` | `food::order()` |
+| **Java** | Package → Class | Access Modifiers | `import` | `Food.order()` |
+| **C++** | Module → Exported Declarations | `export` / Access Specifiers | `import` | `order()` |
+| **Python** | Package → Module | Convention เช่น `_name` | `import` | `food.order()` |
 
 ---
 
-## Analysis
+## 10.7 Analysis
 
-จากตัวอย่างจะเห็นว่าทั้ง 4 ภาษาใช้แนวคิด **Modularity** เพื่อแบ่งโปรแกรมออกเป็นส่วนย่อย แต่ใช้กลไกที่แตกต่างกัน
+### 1. Structure & Modularity
+
+แต่ละภาษาใช้โครงสร้างในการแบ่งและจัดกลุ่ม Code แตกต่างกัน
+
+- **Rust** → Package → Crate → Module
+- **Java** → Package → Class/Interface
+- **C++** → Module → Exported Declarations
+- **Python** → Package → Module
+
+Rust มีแนวคิด **Crate** เป็นหน่วยสำคัญของโปรแกรม โดย Crate เป็น Tree of Modules และ Package สามารถประกอบด้วยหนึ่งหรือหลาย Crates
+
+**เหตุผลด้านการออกแบบ Rust:**  
+เพื่อให้สามารถแบ่ง Functionality ที่เกี่ยวข้องออกเป็นส่วนต่าง ๆ และช่วยจัดโครงสร้างของโปรแกรมเมื่อโปรแกรมมีขนาดใหญ่ขึ้น
+
+---
+
+### 2. Scope & Visibility
+
+แต่ละภาษาใช้วิธีควบคุมการเข้าถึง Code แตกต่างกัน
+
+- **Rust** → Item เป็น Private by Default และใช้ `pub` เพื่อเปิดการเข้าถึง
+- **Java** → ใช้ `public`, `private`, `protected`
+- **C++** → ใช้ `export` เพื่อเปิด Declaration จาก Module และใช้ Access Specifiers ภายใน Class
+- **Python** → ไม่มี `pub` แบบ Rust และมักใช้ Convention เช่น `_name`
+
+Rust จึงทำให้การกำหนด **Public Interface และ Private Implementation** เป็นส่วนสำคัญของ Module System
+
+**เหตุผลด้านการออกแบบ Rust:**  
+เพื่อสนับสนุน **Encapsulation** โดยซ่อน Implementation Details และเปิดเผยเฉพาะส่วนที่ต้องการให้ Code ภายนอกใช้งาน
+
+---
+
+### 3. Syntax & Organization
+
+แต่ละภาษาใช้ Syntax สำหรับจัดโครงสร้าง Code แตกต่างกัน
+
+- **Rust** → `mod`, `pub`, `use`
+- **Java** → `package`, `import`
+- **C++** → `module`, `export`, `import`
+- **Python** → `.py`, `import`
+
+ใน Rust แต่ละคำสั่งมีหน้าที่ที่ชัดเจน
+
+- `mod` → ประกาศ Module
+- `pub` → กำหนด Visibility
+- `use` → นำ Path เข้ามาใน Scope
+- Path → ระบุตำแหน่งของ Item ภายใน Module Tree
+
+**เหตุผลด้านการออกแบบ Rust:**  
+เพื่อจัดการ **Organization, Scope และ Privacy** และช่วยให้การอ้างอิง Item ภายใน Module Tree มีโครงสร้างที่ชัดเจน
+
+---
+
+### 4. Key Difference / Language Design
+
+Rust ออกแบบ Module System โดยเน้น
+
+**Modularity + Scope + Privacy + Encapsulation**
+
+Rust สามารถแบ่ง Code เป็น
 
 ```text
-Rust                    Java
-Package                 Package
-└── Crate               └── Class: Food
-    └── Module: food        └── Method: order()
-        └── Function:
-            order()
-
-
-C                       Python
-Header + Source         Module: food.py
-└── Function: order()   └── Function: order()
+Package
+└── Crate
+    └── Module
+        └── Item
 ```
 
-**Rust** ใช้ Package, Crate และ Module เป็นส่วนสำคัญในการจัด Organization ของโปรแกรม โดย Module และ `use` ช่วยควบคุม Organization, Scope และ Privacy ส่วน Path ใช้ระบุตำแหน่งของ Item ภายใน Module Tree
+และควบคุมว่า Item ใดสามารถเข้าถึงจากภายนอกได้ด้วย `pub`
 
-**Java** ใช้ Package ในการจัดกลุ่ม Class และ Interface และใช้ Access Modifier เพื่อควบคุมการเข้าถึง
+เมื่อเปรียบเทียบกับภาษาอื่น
 
-**C** ไม่มี Module System แบบ Rust โดยตรง แต่สามารถแบ่ง Code ออกเป็น Source File และ Header File และใช้ Scope และ Linkage ในการควบคุมการมองเห็นของชื่อ
+- **Java** เน้นการจัดกลุ่ม Code ผ่าน Package และ Class พร้อม Access Modifiers
+- **C++** ใช้ Module เพื่อแบ่งและ Export Declarations และมี Access Specifiers สำหรับ Class
+- **Python** ใช้ Package และ Module ที่เรียบง่ายกว่า และมักใช้ Naming Convention สำหรับ Non-public API
 
-**Python** ใช้ไฟล์ `.py` เป็น Module และใช้ `import` เพื่อนำ Module มาใช้
-
-ในมุมมองของ PPL จุดสำคัญของ Rust Module System คือ **Modularity, Scope, Namespace, Visibility, Privacy และ Encapsulation** โดย Programmer สามารถกำหนด Public Interface และซ่อน Private Implementation Details ได้อย่างชัดเจน
-
-เมื่อโปรแกรมมีขนาดใหญ่ขึ้น แนวทางนี้ช่วยจัดกลุ่ม Functionality ที่เกี่ยวข้อง แยก Code ที่มีหน้าที่แตกต่างกัน และทำให้สามารถระบุตำแหน่งของ Code ที่ต้องการแก้ไขได้ง่ายขึ้น
+ดังนั้นความแตกต่างสำคัญของ Rust คือการรวม **Module Tree, Path, Scope และ Privacy** เข้ามาเป็นส่วนหนึ่งของ Module System ทำให้สามารถจัดโครงสร้าง Code และควบคุม Public/Private Interface ได้อย่างชัดเจน
 
 ---
 
 ## References
 
-- The Rust Programming Language — Packages, Crates, and Modules  
+- The Rust Programming Language — Managing Growing Projects with Packages, Crates, and Modules  
   https://doc.rust-lang.org/book/ch07-00-managing-growing-projects-with-packages-crates-and-modules.html
+
+- C++ Reference — Modules (C++20)  
+  https://en.cppreference.com/w/cpp/language/modules
+
+- Java Tutorials — Creating and Using Packages  
+  https://docs.oracle.com/javase/tutorial/java/package/index.html
+
+- Python Documentation — Modules  
+  https://docs.python.org/3/tutorial/modules.html
+---
