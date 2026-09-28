@@ -41,7 +41,7 @@
 
 ---
 
-### Runable Code Example
+## 6.Runable Code Example
 
 ตัวอย่างต่อไปนี้แสดงการทำงานของ Modules, Visibility, `pub`, `use`,
 Package, Crate และการจัดโครงสร้างโปรเจกต์ในภาษา Rust
@@ -49,7 +49,7 @@ Package, Crate และการจัดโครงสร้างโปร�
 ตัวอย่างทั้งหมดใช้โปรเจกต์ `modules_demo` และสามารถนำไปทดลองรัน
 เพื่อดูผลลัพธ์ได้จริง
 
-## Example 1 — Module, Visibility และ `pub`
+### Example 1 — Module, Visibility และ `pub`
 
 ตัวอย่างนี้แสดงวิธีสร้าง Module และกำหนดว่า Function ใดสามารถ
 ถูกเรียกใช้งานจากภายนอก Module ได้
@@ -72,6 +72,7 @@ fn main() {
 
     println!("Result = {}", result);
 }
+```
 
 ---
 
