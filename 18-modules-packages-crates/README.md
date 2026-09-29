@@ -41,6 +41,250 @@
 
 ---
 
+## 6.Runable Code Example
+
+ตัวอย่างต่อไปนี้แสดงการทำงานของ Modules, Visibility, `pub`, `use`,
+Package, Crate และการจัดโครงสร้างโปรเจกต์ในภาษา Rust
+
+ตัวอย่างทั้งหมดใช้โปรเจกต์ `modules_demo` และสามารถนำไปทดลองรัน
+เพื่อดูผลลัพธ์ได้จริง
+
+### Example 1 — Module, Visibility และ `pub`
+
+ตัวอย่างนี้แสดงวิธีสร้าง Module และกำหนดว่า Function ใดสามารถ
+ถูกเรียกใช้งานจากภายนอก Module ได้
+
+#### Code ตัวอย่าง
+
+```rust
+mod calculator {
+    pub fn add(a: i32, b: i32) -> i32 {
+        a + b
+    }
+
+    fn secret_operation(a: i32, b: i32) -> i32 {
+        a * b
+    }
+}
+
+fn main() {
+    let result = calculator::add(10, 20);
+
+    println!("Result = {}", result);
+}
+```
+ผลลัพธ์ที่คาดว่าจะได้
+```
+Result = 30
+```
+#### โดยอธิบายทีละส่วนดังนี้
+
+คำสั่ง *mod*
+```rust
+mod calculator
+```
+ใช้สำหรับสร้าง Module ที่ชื่อว่า `calculator`
+
+Function `add` ถูกประกาศด้วย `pub`
+```rust
+pub fn add(a: i32, b: i32) -> i32
+```
+คำว่า `pub` ย่อมาจาก public และทำให้ Function นี้สามารถถูกเรียกใช้งานจากภายนอก Module ได้
+
+ในทางตรงกันข้าม Function secret_operation ไม่ได้ใช้ pub
+```rust
+fn secret_operation(a: i32, b: i32) -> i32
+```
+ดังนั้น Function นี้จะเป็น private และสามารถใช้งานได้ภายในModule calculator เท่านั้น
+
+โดยการเรียกใช้งาน Function สามารถเขียนเป็น
+```rust
+calculator::add(10, 20)
+```
+โดย `::` ใช้สำหรับเข้าถึงสิ่งที่อยู่ภายใน Module ผ่าน Module Path
+
+#### ซึ่งตัวอย่างที่ 1 นี้แสดงแนวคิดเรื่อง Visibility ของ Rust:
+
+- `pub` → สามารถเข้าถึงจากภายนอก Module ได้
+- ไม่มี `pub` → เป็น private โดยค่าเริ่มต้น
+- `::` → ใช้เข้าถึงสิ่งต่าง ๆ ผ่าน Module Path
+
+#### ภาพรวมของ Example 1
+
+```text
+calculator
+│
+├── pub add()
+│      ↑
+│      └── main สามารถเรียกใช้งานได้
+│
+└── secret_operation()
+       ↑
+       └── เป็น private
+```
+
+### Example 2 — การใช้ `use` กับหลาย Module
+
+ตัวอย่างนี้แสดงการแบ่งโปรแกรมออกเป็นหลาย Module
+และการใช้คำสั่ง `use` เพื่อนำ Function จาก Module อื่นมาใช้งาน
+
+#### โครงสร้างโปรเจกต์
+
+```text
+modules_demo/
+├── main.rs
+├── calculator.rs
+└── utils.rs
+```
+
+ในตัวอย่าง Project `modules_demo` นี้แบ่ง Code ออกเป็น 3 ไฟล์
+
+- **main.rs** → โปรแกรมหลัก
+- **calculator.rs** → Function สำหรับการคำนวณ
+- **utils.rs** → Function สำหรับงานทั่วไป
+
+#### calculator.rs
+```rust
+pub fn add(a: i32, b: i32) -> i32 {
+    a + b
+}
+
+pub fn subtract(a: i32, b: i32) -> i32 {
+    a - b
+}
+
+pub fn multiply(a: i32, b: i32) -> i32 {
+    a * b
+}
+
+pub fn divide(a: i32, b: i32) -> f64 {
+    a as f64 / b as f64
+}
+```
+
+#### utils.rs
+```rust
+pub fn print_title(title: &str) {
+    println!("====================");
+    println!("{}", title);
+    println!("====================");
+}
+```
+
+#### main.rs
+```rust
+mod calculator;
+mod utils;
+
+use calculator::{add, subtract, multiply, divide};
+use utils::print_title;
+
+fn main() {
+    print_title("Rust Modules Demo");
+
+    let a = 20;
+    let b = 10;
+
+    println!("Addition: {}", add(a, b));
+    println!("Subtraction: {}", subtract(a, b));
+    println!("Multiplication: {}", multiply(a, b));
+    println!("Division: {}", divide(a, b));
+}
+```
+
+ผลลัพธ์ที่คาดว่าจะได้
+```
+====================
+Rust Modules Demo
+====================
+Addition: 30
+Subtraction: 10
+Multiplication: 200
+Division: 2
+```
+
+### สาธิตการทำงานของแนวคิดทั้งหมดร่วมกันโดยใช้โปรเจกต์ `modules_demo`
+#### ขั้นตอนที่ 1: ตรวจสอบโครงสร้างโปรเจกต์
+```text
+modules_demo/
+├── main.rs
+├── calculator.rs
+└── utils.rs
+```
+
+โปรเจกต์นี้ถูกแบ่งออกเป็น 3 Module เพื่อให้แต่ละส่วนรับผิดชอบหน้าที่ที่แตกต่างกัน
+- **main.rs** → โปรแกรมหลัก
+- **calculator** → เก็บ Function ที่เกี่ยวข้องกับการคำนวณ
+- **utils** → เก็บ Function สำหรับงานทั่วไป
+
+#### ขั้นตอนที่ 2: ตรวจสอบ Module ใน `main.rs`
+คำสั่ง
+```rust
+mod calculator;
+mod utils;
+```
+ใช้เพื่อบอก Rust ว่าโปรแกรมนี้มี Module ที่ชื่อว่า `calculator` และ `utils`
+
+#### ขั้นตอนที่ 3: นำ Function มาใช้งานด้วย `use`
+```rust
+use calculator::{add, subtract, multiply, divide};
+use utils::print_title;
+```
+เพื่อนำ Function ที่ต้องการมาใช้งานใน Scope ปัจจุบัน
+เมื่อเรียก Function มาใช้งานโดยตรง สามารถเขียนสั้นลงเป็น
+```rust
+add(20, 10);
+```
+แทนที่จะต้องเขียน
+```rust
+calculator::add(20, 10);
+```
+
+#### ขั้นตอนที่ 4: ตรวจสอบ Visibility
+Function ใน `calculator.rs` ถูกประกาศด้วย `pub`
+```rust
+pub fn add(a: i32, b: i32) -> i32 {
+    a + b
+}
+```
+ทำให้ Function สามารถถูกเรียกใช้งานจาก Module อื่นได้
+
+#### ขั้นตอนที่ 5: รันโปรแกรม
+ใช้คำสั่งบน Terminal ในโฟลเดอร์ของโปรเจกต์
+```rust
+cargo run
+```
+
+#### สรุปการทำงาน
+Demo นี้แสดงให้เห็นว่า
+1. `mod` ใช้ประกาศ Module
+2. `pub` ใช้กำหนดให้ Function สามารถเข้าถึงจากภายนอก Module ได้
+3. `use` ช่วยนำ Function หรือ Item มาใช้งานได้สะดวกขึ้น
+4. Module ช่วยแบ่ง Code ออกเป็นส่วน ๆ
+5. Crate คือหน่วยของ Source Code ที่นำไป Compile
+6. Package คือโปรเจกต์ที่ Cargo ใช้จัดการ
+7. การแบ่ง Code เป็นหลายไฟล์ช่วยให้โปรเจกต์มีระเบียบและดูแลได้ง่าย
+
+การแบ่ง Function ออกเป็น Module ทำให้ Code มีระเบียบมากขึ้น อ่านง่ายขึ้น และสามารถดูแลหรือแก้ไขในอนาคตได้ง่ายขึ้น
+#### จำง่าย ๆ แบบนี้
+```text
+PACKAGE
+│
+│  โปรเจกต์ที่ Cargo จัดการ
+│
+└── CRATE
+    │
+    │  หน่วย Code ที่ Compiler Compile
+    │
+    ├── MODULE
+    │   └── calculator
+    │
+    └── MODULE
+        └── utils
+```
+
+---
+
 ## 9. PPL Perspective
 
 ในมุมมองของ **Principles of Programming Languages (PPL)** ระบบ Module ของ Rust ช่วยจัดโครงสร้างโปรแกรมขนาดใหญ่ โดยสามารถจัดกลุ่ม Functionality ที่เกี่ยวข้อง แยกส่วนของ Code ที่มีหน้าที่แตกต่างกัน และกำหนดว่าส่วนใดของโปรแกรมสามารถเข้าถึงได้จากภายนอก
