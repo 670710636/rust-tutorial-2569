@@ -203,6 +203,82 @@ Multiplication: 200
 Division: 2
 ```
 
+### สาธิตการทำงานของแนวคิดทั้งหมดร่วมกันโดยใช้โปรเจกต์ `modules_demo`
+#### ขั้นตอนที่ 1: ตรวจสอบโครงสร้างโปรเจกต์
+```text
+modules_demo/
+├── main.rs
+├── calculator.rs
+└── utils.rs
+```
+
+โปรเจกต์นี้ถูกแบ่งออกเป็น 3 Module เพื่อให้แต่ละส่วนรับผิดชอบหน้าที่ที่แตกต่างกัน
+- **main.rs** → โปรแกรมหลัก
+- **calculator** → เก็บ Function ที่เกี่ยวข้องกับการคำนวณ
+- **utils** → เก็บ Function สำหรับงานทั่วไป
+
+#### ขั้นตอนที่ 2: ตรวจสอบ Module ใน `main.rs`
+คำสั่ง
+```rust
+mod calculator;
+mod utils;
+```
+ใช้เพื่อบอก Rust ว่าโปรแกรมนี้มี Module ที่ชื่อว่า `calculator` และ `utils`
+
+#### ขั้นตอนที่ 3: นำ Function มาใช้งานด้วย `use`
+```rust
+use calculator::{add, subtract, multiply, divide};
+use utils::print_title;
+```
+เพื่อนำ Function ที่ต้องการมาใช้งานใน Scope ปัจจุบัน
+เมื่อเรียก Function มาใช้งานโดยตรง สามารถเขียนสั้นลงเป็น
+```rust
+add(20, 10);
+```
+
+#### ขั้นตอนที่ 4: ตรวจสอบ Visibility
+Function ใน `calculator.rs` ถูกประกาศด้วย `pub`
+```rust
+pub fn add(a: i32, b: i32) -> i32 {
+    a + b
+}
+```
+ทำให้ Function สามารถถูกเรียกใช้งานจาก Module อื่นได้
+
+#### ขั้นตอนที่ 5: รันโปรแกรม
+ใช้คำสั่งบน Terminal ในโฟลเดอร์ของโปรเจกต์
+```rust
+cargo run
+```
+
+#### สรุปการทำงาน
+Demo นี้แสดงให้เห็นว่า
+1. `mod` ใช้ประกาศ Module
+2. `pub` ใช้กำหนดให้ Function สามารถเข้าถึงจากภายนอก Module ได้
+3. `use` ช่วยนำ Function หรือ Item มาใช้งานได้สะดวกขึ้น
+4. Module ช่วยแบ่ง Code ออกเป็นส่วน ๆ
+5. Crate คือหน่วยของ Source Code ที่นำไป Compile
+6. Package คือโปรเจกต์ที่ Cargo ใช้จัดการ
+7. การแบ่ง Code เป็นหลายไฟล์ช่วยให้โปรเจกต์มีระเบียบและดูแลได้ง่าย
+
+การแบ่ง Function ออกเป็น Module ทำให้ Code มีระเบียบมากขึ้น อ่านง่ายขึ้น และสามารถดูแลหรือแก้ไขในอนาคตได้ง่ายขึ้น
+### จำง่าย ๆ แบบนี้
+```text
+PACKAGE
+│
+│  โปรเจกต์ที่ Cargo จัดการ
+│
+└── CRATE
+    │
+    │  หน่วย Code ที่ Compiler Compile
+    │
+    ├── MODULE
+    │   └── calculator
+    │
+    └── MODULE
+        └── utils
+```
+
 ---
 
 ## 9. PPL Perspective
