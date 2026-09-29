@@ -180,13 +180,18 @@ src/
 
 1. **Package ต้องมีอย่างน้อย 1 Crate** โดยสามารถมี Binary Crates ได้หลายตัว แต่มี Library Crate ได้ไม่เกิน 1 ตัว
 
-2. **Crate เป็นหน่วยที่ Rust Compiler ใช้ในการ Compile** โดยมีทั้ง Binary Crate และ Library Crate
+2. **Crate เป็นหน่วยที่ Rust Compiler ใช้ในการ Compile** โดยแบ่งเป็น 2 ประเภทหลัก:
+   - **Binary Crate** เป็นโปรแกรมที่สามารถ Compile และรันได้ โดยต้องมี `main` function เป็นจุดเริ่มต้นของโปรแกรม
+   - **Library Crate** เป็นชุดโค้ดที่สร้างไว้เพื่อให้โปรแกรมหรือ Crate อื่นนำไปใช้งาน และไม่มี `main` function
 
 3. **Module ใช้จัดโครงสร้างโค้ดภายใน Crate** โดยใช้ `mod` ในการประกาศ Module
 
 4. **Items ใน Module เป็น Private โดย Default** หากต้องการให้ส่วนอื่นเข้าถึงได้ ต้องใช้ `pub`
 
-5. **Path ใช้อ้างอิงตำแหน่งของ Item ใน Module Tree** โดยสามารถใช้ `crate`, `self`, `super` และใช้ `use` เพื่อนำ Path เข้ามาใน Scope
+5. **Path ใช้อ้างอิงตำแหน่งของ Item ใน Module Tree** โดยแบ่งเป็น:
+   - **Absolute Path** เริ่มอ้างอิงจาก Crate Root โดยมักเริ่มด้วย `crate::`
+   - **Relative Path** เริ่มอ้างอิงจาก Module ปัจจุบัน โดยสามารถใช้ `self::` หรือ `super::`
+   - `use` ใช้นำ Path เข้ามาใน Scope เพื่อให้เรียกใช้งานได้สั้นและสะดวกขึ้น
 
 ---
 
