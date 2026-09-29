@@ -162,6 +162,8 @@ src/
 
 ## 5. Important Syntax / Rules
 
+### Important Syntax
+
 | Syntax / Rule | Meaning | Example |
 |---|---|---|
 | `mod` | ประกาศ Module เพื่อจัดกลุ่มโค้ดและสร้างโครงสร้าง Module Tree | `mod front_of_house;` |
@@ -180,7 +182,7 @@ src/
 
 1. **Package ต้องมีอย่างน้อย 1 Crate** โดยสามารถมี Binary Crates ได้หลายตัว แต่มี Library Crate ได้ไม่เกิน 1 ตัว
 
-2. **Crate เป็นหน่วยที่ Rust Compiler ใช้ในการ Compile** โดยแบ่งเป็น 2 ประเภทหลัก:
+2. **Crate เป็นหน่วยที่ Rust Compiler ใช้ในการ Compile** โดยแบ่งเป็น 2 ได้แก่
    - **Binary Crate** เป็นโปรแกรมที่สามารถ Compile และรันได้ โดยต้องมี `main` function เป็นจุดเริ่มต้นของโปรแกรม
    - **Library Crate** เป็นชุดโค้ดที่สร้างไว้เพื่อให้โปรแกรมหรือ Crate อื่นนำไปใช้งาน และไม่มี `main` function
 
