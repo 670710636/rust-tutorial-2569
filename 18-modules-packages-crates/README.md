@@ -33,15 +33,134 @@
 
 ## 3. Introduction
 
-`[เขียนเนื้อหาที่นี่ — ใช้โครงสร้างเดียวกับ rust_tutorial_template.md ฉบับเต็มที่ผู้สอนแจกให้]`
+**Rust** เป็นภาษาการเขียนโปรแกรมที่ให้ความสำคัญกับความปลอดภัย ความถูกต้องของโปรแกรม และการจัดการทรัพยากรอย่างมีประสิทธิภาพ เมื่อโปรแกรมมีขนาดใหญ่ขึ้น การเขียนโค้ดทั้งหมดไว้ในไฟล์เดียวจะทำให้โปรแกรมอ่านและดูแลได้ยาก
+
+Rust จึงมีระบบสำหรับจัดระเบียบโค้ด ได้แก่ *Modules*, *Crates* และ *Packages* รวมถึงคำสั่ง `use` และระบบ Visibility เช่น `pub`
+
+หัวข้อนี้ช่วยให้ผู้พัฒนาสามารถแบ่งโปรแกรมออกเป็นส่วนย่อย ๆ ตามหน้าที่ ทำให้โค้ดเป็นระเบียบ ลดความซับซ้อน และสามารถนำส่วนต่าง ๆ ของโปรแกรมกลับมาใช้งานได้ง่าย
+
+โดยแนวคิดหลักของหัวข้อนี้ประกอบด้วย
+
+- **Package**: โครงสร้างของโปรเจกต์ที่จัดการโดย Cargo
+- **Crate**: หน่วยของโค้ดที่ Rust Compiler นำไป Compile
+- **Module**: ใช้แบ่งและจัดระเบียบโค้ดภายใน Crate
+- **Visibility**: กำหนดว่าส่วนใดของโค้ดสามารถเข้าถึงจากภายนอกได้
+- `pub`: ใช้เปิดให้ Item เช่น Function หรือ Struct สามารถถูกเข้าถึงจาก Module อื่นได้
+- `use`: ใช้นำ Path ที่ต้องการเข้ามาอยู่ใน Scope
 
 ---
 
-*โครงสร้างเอกสารฉบับเต็ม (Key Concepts, Runnable Code Examples, Common Mistakes, Exercises, PPL Perspective, Rust vs Other Language, References, AI Usage Declaration, GitHub Contribution, Final Checklist) ให้ทำต่อจากจุดนี้ตาม Template หลักของวิชา (`rust_tutorial_template.md`) ที่แนบมากับใบมอบหมายงาน*
+## 4. Key Concepts
+
+### 4.1 Package และ Crate
+
+**คำอธิบาย**
+
+*Package* คือโปรเจกต์ที่ถูกจัดการโดย Cargo โดยภายในจะมีไฟล์ `Cargo.toml` ซึ่งใช้เก็บข้อมูลและการตั้งค่าของโปรเจกต์
+
+*Crate* คือหน่วยของโค้ดที่ Rust Compiler สามารถ Compile ได้ โดย Crate สามารถเป็น Binary Crate สำหรับสร้างโปรแกรมที่สามารถรันได้ หรือ Library Crate สำหรับสร้างโค้ดที่สามารถนำไปใช้ในโปรเจกต์อื่น
+
+ความสัมพันธ์สามารถมองได้ดังนี้
+
+Package
+→ ประกอบด้วย Crate
+→ Crate ประกอบด้วย Modules
+→ Module ประกอบด้วย Functions, Structs และโค้ดส่วนอื่น ๆ
+
+**ตัวอย่าง**
+
+```rust
+fn main() {
+    println!("Hello, Rust!");
+}
+```
+ไฟล์ main.rs เป็นจุดเริ่มต้นของ Binary Crate ในโปรเจกต์ Rust ที่สร้างด้วย Cargo และ Function main() เป็นจุดเริ่มต้นของการทำงานของโปรแกรม
+
+### 4.2 Module
+
+**คำอธิบาย**
+
+*Module* ใช้สำหรับจัดกลุ่มโค้ดที่เกี่ยวข้องกันให้อยู่ภายใต้ชื่อเดียวกัน ช่วยให้โปรแกรมมีโครงสร้างที่ชัดเจนและง่ายต่อการจัดการ
+
+ตัวอย่างสั้น ๆ
+```rust
+mod greeting {
+    fn hello() {
+        println!("Hello!");
+    }
+}
+```
+greeting คือ Module และ hello() เป็น Function ที่อยู่ภายใน Module นั้น ตัวอย่างนี้แสดงแนวคิดพื้นฐานของการสร้าง Module โดยยังไม่ลงรายละเอียดการนำไปใช้งาน
+
+### 4.3 Visibility และ pub
+
+**คำอธิบาย**
+
+Item ภายใน Module ของ Rust จะเป็น Private โดยค่าเริ่มต้น หากต้องการเปิดให้สามารถเข้าถึงจากภายนอก Module สามารถใช้ Keyword pub
+
+ตัวอย่างสั้น ๆ
+```rust
+mod user {
+    pub struct User {
+        pub name: String,
+    }
+}
+```
+pub หน้า struct ทำให้ User สามารถถูกเข้าถึงจากภายนอก Module ได้ ส่วน pub หน้า name ทำให้ Field นี้สามารถถูกเข้าถึงได้
+
+### 4.4 use และ Path
+
+**คำอธิบาย**
+
+Path ใช้ระบุตำแหน่งของ Item ภายในโครงสร้างของโปรแกรม ส่วน use ใช้นำ Item ที่ต้องการเข้ามาอยู่ใน Scope เพื่อให้สามารถเรียกใช้งานได้สะดวกขึ้น
+
+ตัวอย่างสั้น ๆ
+```rust
+use std::collections::HashMap;
+```
+ตัวอย่างนี้นำ HashMap จาก Standard Library เข้ามาใน Scope ทำให้สามารถอ้างถึง HashMap ได้โดยตรง แทนการเขียน Path แบบเต็มทุกครั้ง
+
+ตัวอย่างการใช้งาน
+```rust
+mod greeting {
+    pub fn hello() {
+        println!("Hello!");
+    }
+    
+    pub fn bye() {
+        println!("Bye Bye!");
+    }
+}
+
+use greeting::{hello, bye};
+
+fn main() {
+    hello();
+    bye();
+}
+```
+สามารถเรียก function `hello();` และ `bye();` มาใช้ได้เลย
+
+### 4.5 Project Organization
+
+**คำอธิบาย***
+
+โปรเจกต์ Rust สามารถแบ่งโค้ดออกเป็นหลาย Module และหลายไฟล์ตามหน้าที่ เพื่อให้โครงสร้างโปรแกรมเป็นระเบียบและง่ายต่อการดูแล
+
+ตัวอย่างโครงสร้าง
+
+src/
+├── main.rs
+├── user.rs
+└── config.rs
+
+ในตัวอย่างนี้ main.rs เป็นไฟล์หลัก ส่วน user.rs และ config.rs สามารถใช้เก็บโค้ดที่เกี่ยวข้องกับ User และ Configuration ตามลำดับ
+
+รายละเอียดการเชื่อมต่อและการใช้งานหลายไฟล์จะแสดงในส่วน Runable Code Example
 
 ---
 
-## 6.Runable Code Example
+## 6. Runable Code Example
 
 ตัวอย่างต่อไปนี้แสดงการทำงานของ Modules, Visibility, `pub`, `use`,
 Package, Crate และการจัดโครงสร้างโปรเจกต์ในภาษา Rust
