@@ -160,6 +160,36 @@ src/
 
 ---
 
+## 5. Important Syntax / Rules
+
+| Syntax / Rule | Meaning | Example |
+|---|---|---|
+| `mod` | ประกาศ Module เพื่อจัดกลุ่มโค้ดและสร้างโครงสร้าง Module Tree | `mod front_of_house;` |
+| `pub` | กำหนดให้ Module หรือ Item สามารถเข้าถึงได้จากภายนอกตามกฎ Privacy | `pub fn add_to_waitlist() {}` |
+| `use` | นำ Path เข้ามาใน Scope เพื่อให้เรียกใช้งานได้สั้นและสะดวกขึ้น | `use crate::front_of_house::hosting;` |
+| `pub use` | นำ Item เข้ามาใน Scope และ Re-export ให้ส่วนอื่นเข้าถึงผ่าน Path ใหม่ได้ | `pub use crate::front_of_house::hosting;` |
+| `crate::` | ใช้เริ่ม Absolute Path จาก Crate Root ของ Crate ปัจจุบัน | `crate::front_of_house::hosting` |
+| `self::` | ใช้อ้างอิงจาก Module ปัจจุบัน | `self::hosting` |
+| `super::` | ใช้อ้างอิง Item ที่อยู่ใน Parent Module | `super::deliver_order()` |
+| `::` | ใช้คั่นส่วนต่าง ๆ ของ Path ใน Module Tree | `std::collections::HashMap` |
+| `Cargo.toml` | ไฟล์ที่อธิบาย Package และข้อมูลที่ Cargo ใช้ในการจัดการ Package | `Cargo.toml` |
+| `src/main.rs` | Crate Root ของ Binary Crate ตามโครงสร้างมาตรฐานของ Cargo | `fn main() {}` |
+| `src/lib.rs` | Crate Root ของ Library Crate ตามโครงสร้างมาตรฐานของ Cargo | `pub mod hosting;` |
+
+### Important Rules
+
+1. **Package ต้องมีอย่างน้อย 1 Crate** โดยสามารถมี Binary Crates ได้หลายตัว แต่มี Library Crate ได้ไม่เกิน 1 ตัว
+
+2. **Crate เป็นหน่วยที่ Rust Compiler ใช้ในการ Compile** โดยมีทั้ง Binary Crate และ Library Crate
+
+3. **Module ใช้จัดโครงสร้างโค้ดภายใน Crate** โดยใช้ `mod` ในการประกาศ Module
+
+4. **Items ใน Module เป็น Private โดย Default** หากต้องการให้ส่วนอื่นเข้าถึงได้ ต้องใช้ `pub`
+
+5. **Path ใช้อ้างอิงตำแหน่งของ Item ใน Module Tree** โดยสามารถใช้ `crate`, `self`, `super` และใช้ `use` เพื่อนำ Path เข้ามาใน Scope
+
+---
+
 ## 6. Runable Code Example
 
 ตัวอย่างต่อไปนี้แสดงการทำงานของ Modules, Visibility, `pub`, `use`,
