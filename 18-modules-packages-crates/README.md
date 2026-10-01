@@ -1474,7 +1474,7 @@ https://doc.rust-lang.org/rust-by-example/mod.html`
 | นายสิปปกร ทองนุ่ม | `0` | `0` | `0` | `0` | `Concept + Short Code Illustration` |
 | นางสาวอชิรญา ก้อนสุวรรณ | `0` | `[จำนวน]` | `1` | `[จำนวน]` | `Detailed Code + Live Demo` |
 | นางสาวอนัญญณัชช์ ขจรศิริผล | `0` | `[จำนวน]` | `1` | `[จำนวน]` | `Rust vs Other Language + PPL Analysis` |
-| นายกฤติน เหลืองระลึก | `[จำนวน]` | `[จำนวน]` | `[จำนวน]` | `[จำนวน]` | `Exercises + Common Mistakes + Challenge` |
+| นายกฤติน เหลืองระลึก | `0` | `[จำนวน]` | `1` | `[จำนวน]` | `Exercises + Common Mistakes + Challenge` |
 
 ### Teamwork Reflection
 
