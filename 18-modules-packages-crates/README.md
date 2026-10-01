@@ -1595,9 +1595,7 @@ https://doc.rust-lang.org/rust-by-example/mod.html`
     https://doc.rust-lang.org/cargo/guide/project-layout.html`
 10. `Rust Compiler Error Index (ใช้อ้าง E0603, E0451, E0432, E0425 ใน Common Mistakes)
      https://doc.rust-lang.org/error_codes/error-index.html`
-11. ``
-12. ``
-
+    
 ---
 
 ## 13. AI Usage Declaration
@@ -1613,10 +1611,10 @@ https://doc.rust-lang.org/rust-by-example/mod.html`
 
 ### Declaration
 
-- [ ] Code ทุกส่วนที่นำเสนอได้รับการ Compile และทดสอบแล้ว
-- [ ] สมาชิกทุกคนสามารถอธิบาย Code ที่นำเสนอได้
-- [ ] ตรวจสอบข้อมูลจากแหล่งอ้างอิงที่น่าเชื่อถือแล้ว
-- [ ] ระบุการใช้ AI อย่างโปร่งใส
+- [✓] Code ทุกส่วนที่นำเสนอได้รับการ Compile และทดสอบแล้ว
+- [✓] สมาชิกทุกคนสามารถอธิบาย Code ที่นำเสนอได้
+- [✓] ตรวจสอบข้อมูลจากแหล่งอ้างอิงที่น่าเชื่อถือแล้ว
+- [✓] ระบุการใช้ AI อย่างโปร่งใส
 
 **รายละเอียดการใช้ AI**
 
@@ -1668,31 +1666,31 @@ https://doc.rust-lang.org/rust-by-example/mod.html`
 
 **Problems encountered**
 
-`[ปัญหาที่พบ]`
+`มีเพื่อนในกลุ่มถอนรายวิชาไป แล้วได้หัวข้อแรกซึ่งสำคัญมากในการทำโปรเจคครั้งนี้ ทำให้ต้องมีการคุยงานใหม่ทั้งหมดกับเพื่อน ๆ ที่เหลืออยู่ในกลุ่ม และมีปัญหาในการใช้ GitHub เพราะทุกคนไม่คุ้นเคย`
 
 **How did you solve them?**
 
-`[วิธีแก้ปัญหา]`
+`เพื่อนในกลุ่มทุกคนปรึกษากันในเรื่องช่วยกันทำงานในส่วนของเพื่อนคนที่ถอนไป และรับผิดชอบตามที่ได้ตกลงกันไว้ครบถ้วน ในส่วนเรื่องของ GitHub ทุกคนได้มีการศึกษาหาความรู้ในการใช้ GitHub จนสามารถใช้งานในการทำงานโปรเจคครั้งนี้ได้ลุล่วง`
 
 ---
 
 ## 15. Final Checklist
 
-- [ ] Learning Objectives ครบ 3–4 ข้อ
-- [ ] Key Concepts ครบถ้วน
-- [ ] Syntax / Rules
-- [ ] Runnable Code Examples
-- [ ] Code Compile และ Run ได้จริง
-- [ ] Common Mistakes
-- [ ] Exercises 2 ข้อ พร้อม Solutions
-- [ ] PPL Perspective
-- [ ] Rust vs Other Language
-- [ ] References อย่างน้อย 4 แหล่ง
-- [ ] AI Usage Declaration
-- [ ] GitHub Contribution
-- [ ] สมาชิกทั้ง 4 คนมีส่วนร่วม
-- [ ] สมาชิกทั้ง 4 คนพร้อมนำเสนอคนละ 5 นาที
-- [ ] สมาชิกทุกคนสามารถอธิบาย Code ของกลุ่มได้
+- [✓] Learning Objectives ครบ 3–4 ข้อ
+- [✓] Key Concepts ครบถ้วน
+- [✓] Syntax / Rules
+- [✓] Runnable Code Examples
+- [✓] Code Compile และ Run ได้จริง
+- [✓] Common Mistakes
+- [✓] Exercises 2 ข้อ พร้อม Solutions
+- [✓] PPL Perspective
+- [✓] Rust vs Other Language
+- [✓] References อย่างน้อย 4 แหล่ง
+- [✓] AI Usage Declaration
+- [✓] GitHub Contribution
+- [✓] สมาชิกทั้ง 4 คนมีส่วนร่วม
+- [✓] สมาชิกทั้ง 4 คนพร้อมนำเสนอคนละ 5 นาที
+- [✓] สมาชิกทุกคนสามารถอธิบาย Code ของกลุ่มได้
 
 ---
 
