@@ -475,14 +475,14 @@ pub fn display_result(...)
 ```
 การใช้ `pub` ทำให้ฟังก์ชันเหล่านี้สามารถถูกเรียกใช้งานจาก Module อื่นได้
 
-ส่วนฟังก์ชัน `get_message()` เขียนโดยไม่มี pub
+ส่วนฟังก์ชัน `get_message()` เขียนโดยไม่มี `pub`
 ```rust
 fn get_message(...)
 ```
 ดังนั้นฟังก์ชันนี้จะเป็น private และสามารถใช้งานได้ภายใน Module grade เท่านั้น
 
 ตัวอย่างนี้แสดงให้เห็นระบบ Visibility ของ Rust โดยค่าเริ่มต้น
-Item ต่าง ๆ จะเป็น private และสามารถใช้ pub เพื่อเปิดให้ Module อื่นเข้าถึงได้
+Item ต่าง ๆ จะเป็น private และสามารถใช้ `pub` เพื่อเปิดให้ Module อื่นเข้าถึงได้
 
 #### utils.rs
 ```rust
@@ -497,7 +497,7 @@ pub fn print_sep() {
     println!("------------------------------");
 }
 ```
-ฟังก์ชันทั้งสองถูกประกาศด้วย pub จึงสามารถนำไปใช้งานจาก main.rs ได้
+ฟังก์ชันทั้งสองถูกประกาศด้วย `pub` จึงสามารถนำไปใช้งานจาก `main.rs` ได้
 
 #### main.rs
 ```rust
@@ -520,17 +520,17 @@ fn main() {
     display_result("Somchai", Somchai_score);
 }
 ```
-คำสั่งต่อไปนี้ใช้ประกาศว่าโปรเจกต์มี Module ชื่อ grade และ utils
+คำสั่ง `mod` ต่อไปนี้ใช้ประกาศว่าโปรเจกต์มี Module ชื่อ grade และ utils
 ```rust
 mod grade;
 mod utils;
 ```
-ส่วนคำสั่ง use ใช้นำฟังก์ชันที่ต้องการจาก Module เข้ามาใช้งานใน Scope ของ main.rs
+ส่วนคำสั่ง `use` ใช้นำฟังก์ชันที่ต้องการจาก Module เข้ามาใช้งานใน Scope ของ main.rs
 ```rust
 use grade::{calculate_grade, display_result, is_passed};
 use utils::{print_header, print_separator};
 ```
-หลังจากใช้ use แล้ว เราสามารถเรียกฟังก์ชันได้โดยตรง เช่น
+หลังจากใช้ `use` แล้ว เราสามารถเรียกฟังก์ชันได้โดยตรง เช่น
 ```rust
 display_result("Achiraya", Achiraya_score);
 ```
@@ -538,7 +538,7 @@ display_result("Achiraya", Achiraya_score);
 ```rust
 grade::display_result("Achiraya", Achiraya_score);
 ```
-ดังนั้น use ช่วยให้การเรียกใช้งาน Item จาก Module กระชับและอ่านง่ายขึ้น
+ดังนั้น `use` ช่วยให้การเรียกใช้งาน Item จาก Module กระชับและอ่านง่ายขึ้น
 
 #### การรันโปรแกรม
 เปิด Terminal ภายในโฟลเดอร์ `module_demo2` แล้วใช้คำสั่ง
