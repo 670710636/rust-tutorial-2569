@@ -1426,22 +1426,22 @@ Package
 
 1. `The Rust Programming Language — Managing Growing Projects with Packages, Crates, and Modules  
   https://doc.rust-lang.org/book/ch07-00-managing-growing-projects-with-packages-crates-and-modules.html`
-2. `C++ Reference — Modules (C++20)  
+2. `Example Modules Code
+https://doc.rust-lang.org/rust-by-example/mod.html`
+3. `Rust Module (With Example)`
+   https://www.programiz.com/rust/module
+4. `C++ Reference — Modules (C++20)  
   https://en.cppreference.com/w/cpp/language/modules`
-3. `Java Tutorials — Creating and Using Packages  
+5. `Java Tutorials — Creating and Using Packages  
   https://docs.oracle.com/javase/tutorial/java/package/index.html`
-4. `Python Documentation — Modules  
+6. `Python Documentation — Modules  
   https://docs.python.org/3/tutorial/modules.html`
-5. ``
-6. ``
 7. ``
 8. ``
 9. ``
 10. ``
 11. ``
 12. ``
-13. ``
-14. ``
 
 ---
 
@@ -1472,7 +1472,7 @@ Package
 | Member | Issues | Commits | Pull Requests | Code Reviews | Contribution |
 |---|---:|---:|---:|---:|---|
 | นายสิปปกร ทองนุ่ม | `0` | `0` | `0` | `0` | `Concept + Short Code Illustration` |
-| นางสาวอชิรญา ก้อนสุวรรณ | `[จำนวน]` | `[จำนวน]` | `[จำนวน]` | `[จำนวน]` | `Detailed Code + Live Demo` |
+| นางสาวอชิรญา ก้อนสุวรรณ | `0` | `[จำนวน]` | `1` | `[จำนวน]` | `Detailed Code + Live Demo` |
 | นางสาวอนัญญณัชช์ ขจรศิริผล | `0` | `[จำนวน]` | `1` | `[จำนวน]` | `Rust vs Other Language + PPL Analysis` |
 | นายกฤติน เหลืองระลึก | `[จำนวน]` | `[จำนวน]` | `[จำนวน]` | `[จำนวน]` | `Exercises + Common Mistakes + Challenge` |
 
@@ -1480,7 +1480,34 @@ Package
 
 **How did your team collaborate?**
 
-`[อธิบายกระบวนการทำงานร่วมกัน]`
+`เราแบ่งงานออกเป็น 4 ส่วนหลัก โดยสมาชิกแต่ละคนรับผิดชอบเนื้อหาที่แตกต่างกัน แยกกันไปทำส่วนของตนเอง 
+และมีการสื่อสารกันผ่านกลุ่มไลน์เพื่อให้เนื้อหาทั้งหมดมีความต่อเนื่องและเป็นไปในทิศทางเดียวกัน
+
+- **สมาชิกคนที่ 1 — Concept และ Short Code Illustration:**  
+  รับผิดชอบอธิบายแนวคิดพื้นฐานเกี่ยวกับ Modules, Packages และ Crates
+  พร้อมจัดทำตัวอย่างโค้ดสั้น ๆ เพื่อช่วยให้ผู้อ่านเข้าใจแนวคิดและ syntax เบื้องต้น
+
+- **สมาชิกคนที่ 2 — Detailed Code และ Live Demo:**  
+  รับผิดชอบจัดทำตัวอย่างโค้ด Rust แบบละเอียดและสามารถรันได้จริง
+  ครอบคลุมเรื่อง Module, Visibility, `pub`, `use`, Package, Crate
+  รวมถึงเตรียมโค้ดสำหรับการสาธิตการทำงาน
+
+- **สมาชิกคนที่ 3 — Rust vs Other Languages และ PPL Analysis:**  
+  รับผิดชอบเปรียบเทียบแนวคิดของ Rust กับภาษาโปรแกรมอื่น ๆ
+  และวิเคราะห์หัวข้อนี้ในมุมมองของ Programming Language
+
+- **สมาชิกคนที่ 4 — Exercises, Common Mistakes และ Challenge:**  
+  รับผิดชอบจัดทำแบบฝึกหัด อธิบายข้อผิดพลาดที่พบบ่อย
+  และจัดทำโจทย์เพิ่มเติมเพื่อให้ผู้อ่านสามารถนำความรู้ไปฝึกปฏิบัติได้
+
+แต่ระหว่างทำงานได้มีการเปลี่ยนแผน เนื่องจาก**สมาชิกคนที่ 1** ถอนรายวิชานี้ 
+และไม่มีผู้รับผิดชอบในส่วนของ **Concept และ Short Code Illustration**
+ดังนั้น เมื่อ**สมาชิกคนที่2-4**ทำงานในส่วนของตัวเองเรียบร้อย จึงมาร่วมจัดทำส่วนนี้ด้วยกัน
+
+ในการทำงานร่วมกัน ทีมใช้ GitHub เป็นเครื่องมือหลักในการจัดการโค้ด รวบรวมแต่ละส่วน 
+และติดตามการเปลี่ยนแปลง โดยสมาชิกแต่ละคนทำงานบน Branch ของตนเอง
+จากนั้น Commit และ Push งานขึ้น GitHub และใช้ Pull Request
+เพื่อส่งงานให้สมาชิกในทีมตรวจสอบก่อนรวมเข้ากับโปรเจกต์หลัก`
 
 **Problems encountered**
 
