@@ -411,7 +411,158 @@ pub fn add(a: i32, b: i32) -> i32 {
 cargo run
 ```
 
-#### สรุปการทำงาน
+### ตัวอย่าง: Student Grade Demo
+
+ตัวอย่างนี้แสดงการใช้งาน Module ของ Rust ผ่านโปรแกรมคำนวณเกรด
+ของนักเรียน โดยเน้นการแบ่งโค้ดออกเป็นหลายไฟล์ การกำหนดสิทธิ์
+การเข้าถึงด้วย `pub` การนำฟังก์ชันมาใช้งานด้วย `use` รวมถึง
+ความสัมพันธ์ระหว่าง Package, Crate และ Module
+
+#### โครงสร้างโปรเจกต์
+
+```text
+module_demo2/
+├── Cargo.toml
+└── src/
+    ├── main.rs
+    ├── student.rs
+    └── utils.rs
+```
+
+โปรเจกต์นี้ถูกแบ่งออกเป็น 3 Module เพื่อให้แต่ละส่วนรับผิดชอบหน้าที่ที่แตกต่างกัน
+- **main.rs** → เป็นจุดเริ่มต้นของโปรแกรมหลัก
+- **student.rs** → เก็บฟังก์ชันที่เกี่ยวข้องกับการคำนวณเกรดจากคะแนนนักเรียน
+- **utils** → เก็บฟังก์ชันช่วยจัดรูปแบบการแสดงผล
+
+#### student.rs
+```rust
+pub fn calculate_grade(score: f32) -> &'static str {
+    if score >= 80.0 {
+        "A"
+    } else if score >= 70.0 {
+        "B"
+    } else if score >= 60.0 {
+        "C"
+    } else if score >= 50.0 {
+        "D"
+    } else {
+        "F"
+    }
+}
+
+fn get_message(score: f32) -> &'static str {
+    if score >= 80.0 {
+        "Excellent!"
+    } else if score >= 50.0 {
+        "Passed"
+    } else {
+        "Failed"
+    }
+}
+
+pub fn display_result(name: &str, score: f32) {
+    println!("Student: {}", name);
+    println!("Score: {}", score);
+    println!("Grade: {}", calculate_grade(score));
+    println!("Status: {}", get_message(score));
+}
+```
+
+ใน Module student มีฟังก์ชันที่เป็น pub อยู่ 2 ฟังก์ชัน ได้แก่
+```rust
+pub fn calculate_grade(...)
+pub fn display_result(...)
+```
+การใช้ `pub` ทำให้ฟังก์ชันเหล่านี้สามารถถูกเรียกใช้งานจาก Module อื่นได้
+
+ส่วนฟังก์ชัน `get_message()` เขียนโดยไม่มี pub
+```rust
+fn get_message(...)
+```
+ดังนั้นฟังก์ชันนี้จะเป็น private และสามารถใช้งานได้ภายใน Module grade เท่านั้น
+
+ตัวอย่างนี้แสดงให้เห็นระบบ Visibility ของ Rust โดยค่าเริ่มต้น
+Item ต่าง ๆ จะเป็น private และสามารถใช้ pub เพื่อเปิดให้ Module อื่นเข้าถึงได้
+
+#### utils.rs
+```rust
+pub fn print_header(title: &str) {
+    println!();
+    println!("==============================");
+    println!("{}", title);
+    println!("==============================");
+}
+
+pub fn print_sep() {
+    println!("------------------------------");
+}
+```
+ฟังก์ชันทั้งสองถูกประกาศด้วย pub จึงสามารถนำไปใช้งานจาก main.rs ได้
+
+#### main.rs
+```rust
+mod student;
+mod utils;
+
+use student::{calculate_grade, display_result};
+use utils::{print_header, print_sep};
+
+fn main() {
+    print_header("Student Grade Demo");
+
+    let Achiraya_score = 85.0;
+    let Somchai_score = 45.0;
+
+    display_result("Achiraya", Achiraya_score);
+
+    print_sep();
+
+    display_result("Somchai", Somchai_score);
+}
+```
+คำสั่งต่อไปนี้ใช้ประกาศว่าโปรเจกต์มี Module ชื่อ grade และ utils
+```rust
+mod grade;
+mod utils;
+```
+ส่วนคำสั่ง use ใช้นำฟังก์ชันที่ต้องการจาก Module เข้ามาใช้งานใน Scope ของ main.rs
+```rust
+use grade::{calculate_grade, display_result, is_passed};
+use utils::{print_header, print_separator};
+```
+หลังจากใช้ use แล้ว เราสามารถเรียกฟังก์ชันได้โดยตรง เช่น
+```rust
+display_result("Achiraya", Achiraya_score);
+```
+แทนที่จะต้องเขียน Path เต็มว่า
+```rust
+grade::display_result("Achiraya", Achiraya_score);
+```
+ดังนั้น use ช่วยให้การเรียกใช้งาน Item จาก Module กระชับและอ่านง่ายขึ้น
+
+#### การรันโปรแกรม
+เปิด Terminal ภายในโฟลเดอร์ module_demo2 แล้วใช้คำสั่ง
+```rust
+cargo run
+```
+
+ผลลัพธ์ที่คาดว่าจะได้คือ
+```
+==============================
+Student Grade Demo
+==============================
+Student: Achiraya
+Score: 85
+Grade: A
+Status: Excellent!
+------------------------------
+Student: Somchai
+Score: 45
+Grade: F
+Status: Failed
+```
+
+#### สรุปการทำงานจากตัวอย่างทั้ง 2 Project
 Demo นี้แสดงให้เห็นว่า
 1. `mod` ใช้ประกาศ Module
 2. `pub` ใช้กำหนดให้ Function สามารถเข้าถึงจากภายนอก Module ได้
