@@ -1387,18 +1387,141 @@ Package
 
 ---
 
-## References
+## 11. Teach Your Topic
 
-- The Rust Programming Language — Managing Growing Projects with Packages, Crates, and Modules  
-  https://doc.rust-lang.org/book/ch07-00-managing-growing-projects-with-packages-crates-and-modules.html
+การนำเสนอมีสมาชิก **4 คน คนละประมาณ 5 นาที**
 
-- C++ Reference — Modules (C++20)  
-  https://en.cppreference.com/w/cpp/language/modules
+| Member | Responsibility | Time |
+|---|---|---:|
+| นายสิปปกร ทองนุ่ม | Concept + Short Code Illustration | 5 min |
+| นางสาวอชิรญา ก้อนสุวรรณ | Detailed Code + Live Demo | 5 min |
+| นางสาวอนัญญณัชช์ ขจรศิริผล | Rust vs Other Language + PPL Analysis | 5 min |
+| นายกฤติน เหลืองระลึก | Exercises + Common Mistakes + Challenge | 5 min |
 
-- Java Tutorials — Creating and Using Packages  
-  https://docs.oracle.com/javase/tutorial/java/package/index.html
+### Individual Contribution
 
-- Python Documentation — Modules  
-  https://docs.python.org/3/tutorial/modules.html
-  
+**นายสิปปกร ทองนุ่ม**
+
+`Concept + Short Code Illustration`
+
+**นางสาวอชิรญา ก้อนสุวรรณ**
+
+`Detailed Code + Live Demo`
+
+**นางสาวอนัญญณัชช์ ขจรศิริผล**
+
+`Rust vs Other Language + PPL Analysis`
+
+**นายกฤติน เหลืองระลึก**
+
+`Exercises + Common Mistakes + Challenge`
+
+> สมาชิกทุกคนต้องสามารถอธิบาย Code ของกลุ่มได้ ไม่ใช่เฉพาะส่วนที่ตนเองเขียน
+
 ---
+
+## 12. References
+
+> แนะนำให้มีอย่างน้อย **4 แหล่งอ้างอิง** และควรใช้เอกสารทางการเป็นหลัก
+
+1. `The Rust Programming Language — Managing Growing Projects with Packages, Crates, and Modules  
+  https://doc.rust-lang.org/book/ch07-00-managing-growing-projects-with-packages-crates-and-modules.html`
+2. `C++ Reference — Modules (C++20)  
+  https://en.cppreference.com/w/cpp/language/modules`
+3. `Java Tutorials — Creating and Using Packages  
+  https://docs.oracle.com/javase/tutorial/java/package/index.html`
+4. `Python Documentation — Modules  
+  https://docs.python.org/3/tutorial/modules.html`
+5. ``
+6. ``
+7. ``
+8. ``
+9. ``
+10. ``
+11. ``
+12. ``
+13. ``
+14. ``
+
+---
+
+## 13. AI Usage Declaration
+
+สามารถใช้ AI เป็นเครื่องมือช่วยเรียนรู้และพัฒนาได้ แต่สมาชิกทุกคนต้องเข้าใจและสามารถอธิบายผลงานของกลุ่มได้
+
+| AI Tool | Purpose | How the Result Was Verified |
+|---|---|---|
+| `ChatGPT` | `[ใช้เพื่ออะไร]` | `[ตรวจสอบอย่างไร]` |
+| `[AI tool]` | `[ใช้เพื่ออะไร]` | `[ตรวจสอบอย่างไร]` |
+
+### Declaration
+
+- [ ] Code ทุกส่วนที่นำเสนอได้รับการ Compile และทดสอบแล้ว
+- [ ] สมาชิกทุกคนสามารถอธิบาย Code ที่นำเสนอได้
+- [ ] ตรวจสอบข้อมูลจากแหล่งอ้างอิงที่น่าเชื่อถือแล้ว
+- [ ] ระบุการใช้ AI อย่างโปร่งใส
+
+**รายละเอียดการใช้ AI**
+
+`[อธิบายว่าใช้ AI ในขั้นตอนใด และสมาชิกตรวจสอบผลลัพธ์อย่างไร]`
+
+---
+
+## 14. GitHub Contribution
+
+| Member | Issues | Commits | Pull Requests | Code Reviews | Contribution |
+|---|---:|---:|---:|---:|---|
+| นายสิปปกร ทองนุ่ม | `0` | `0` | `0` | `0` | `Concept + Short Code Illustration` |
+| นางสาวอชิรญา ก้อนสุวรรณ | `[จำนวน]` | `[จำนวน]` | `[จำนวน]` | `[จำนวน]` | `Detailed Code + Live Demo` |
+| นางสาวอนัญญณัชช์ ขจรศิริผล | `0` | `[จำนวน]` | `1` | `[จำนวน]` | `Rust vs Other Language + PPL Analysis` |
+| นายกฤติน เหลืองระลึก | `[จำนวน]` | `[จำนวน]` | `[จำนวน]` | `[จำนวน]` | `Exercises + Common Mistakes + Challenge` |
+
+### Teamwork Reflection
+
+**How did your team collaborate?**
+
+`[อธิบายกระบวนการทำงานร่วมกัน]`
+
+**Problems encountered**
+
+`[ปัญหาที่พบ]`
+
+**How did you solve them?**
+
+`[วิธีแก้ปัญหา]`
+
+---
+
+## 15. Final Checklist
+
+- [ ] Learning Objectives ครบ 3–4 ข้อ
+- [ ] Key Concepts ครบถ้วน
+- [ ] Syntax / Rules
+- [ ] Runnable Code Examples
+- [ ] Code Compile และ Run ได้จริง
+- [ ] Common Mistakes
+- [ ] Exercises 2 ข้อ พร้อม Solutions
+- [ ] PPL Perspective
+- [ ] Rust vs Other Language
+- [ ] References อย่างน้อย 4 แหล่ง
+- [ ] AI Usage Declaration
+- [ ] GitHub Contribution
+- [ ] สมาชิกทั้ง 4 คนมีส่วนร่วม
+- [ ] สมาชิกทั้ง 4 คนพร้อมนำเสนอคนละ 5 นาที
+- [ ] สมาชิกทุกคนสามารถอธิบาย Code ของกลุ่มได้
+
+---
+
+## Submission Information
+
+**Repository:** `[GitHub repository URL]`
+
+**Chapter Path:** `[เช่น chapters/01-introduction/]`
+
+**Final PR:** `#[PR number]`
+
+**Submitted by:** `[Group XX]`
+
+**Date:** `[YYYY-MM-DD]`
+
+
