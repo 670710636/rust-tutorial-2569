@@ -411,7 +411,7 @@ pub fn add(a: i32, b: i32) -> i32 {
 cargo run
 ```
 
-### ตัวอย่าง: Student Grade Demo
+### Example 3 — ตัวอย่าง: Student Grade Demo
 
 ตัวอย่างนี้แสดงการใช้งาน Module ของ Rust ผ่านโปรแกรมคำนวณเกรด
 ของนักเรียน โดยเน้นการแบ่งโค้ดออกเป็นหลายไฟล์ การกำหนดสิทธิ์
@@ -541,7 +541,7 @@ grade::display_result("Achiraya", Achiraya_score);
 ดังนั้น use ช่วยให้การเรียกใช้งาน Item จาก Module กระชับและอ่านง่ายขึ้น
 
 #### การรันโปรแกรม
-เปิด Terminal ภายในโฟลเดอร์ module_demo2 แล้วใช้คำสั่ง
+เปิด Terminal ภายในโฟลเดอร์ `module_demo2` แล้วใช้คำสั่ง
 ```rust
 cargo run
 ```
