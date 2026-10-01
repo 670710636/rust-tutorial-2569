@@ -1436,10 +1436,14 @@ https://doc.rust-lang.org/rust-by-example/mod.html`
   https://docs.oracle.com/javase/tutorial/java/package/index.html`
 6. `Python Documentation — Modules  
   https://docs.python.org/3/tutorial/modules.html`
-7. ``
-8. ``
-9. ``
-10. ``
+7. `Rust Book บทที่ 7 (modules, packages, crates)
+    https://doc.rust-lang.org/book/ch07-00-managing-growing-projects-with-packages-crates-and-modules.html`
+8. `The Rust Reference Visibility and Privacy (เรื่อง pub ที่ใช้ในส่วนของคุณ)
+    https://doc.rust-lang.org/reference/visibility-and-privacy.html`
+9. `The Cargo Book Package Layout (ใช้กับ Exercise 2)
+    https://doc.rust-lang.org/cargo/guide/project-layout.html`
+10. `Rust Compiler Error Index (ใช้อ้าง E0603, E0451, E0432, E0425 ใน Common Mistakes)
+     https://doc.rust-lang.org/error_codes/error-index.html`
 11. ``
 12. ``
 
@@ -1452,6 +1456,8 @@ https://doc.rust-lang.org/rust-by-example/mod.html`
 | AI Tool | Purpose | How the Result Was Verified |
 |---|---|---|
 | `ChatGPT` | `[ใช้เพื่ออะไร]` | `[ตรวจสอบอย่างไร]` |
+| `Claude` | `ช่วยร่างตัวอย่างโค้ด Common Mistakes, Exercises และเนื้อหาสไลด์ของ Member 4` | `คอมไพล์และรันโค้ดทุกตัวอย่างด้วย rustc/cargo ในเครื่อง เทียบข้อความ error กับที่ compiler แสดงจริง และตรวจแนวคิดกับ Rust Book บทที่ 7 และ Rust Reference` |
+| `Gemini` | `ใช้ช่วยอธิบายแนวคิดเรื่องโครงสร้างโมดูล การจัดระเบียบไฟล์ และให้คำแนะนำขั้นตอนการใช้งาน Git/GitHub สำหรับโปรเจกต์กลุ่ม` | `ตรวจสอบความถูกต้องโดยทดลองทำตามขั้นตอนการอัปโหลดไฟล์และคำสั่ง Git ที่แนะนำบนระบบ GitHub จริง` |
 | `[AI tool]` | `[ใช้เพื่ออะไร]` | `[ตรวจสอบอย่างไร]` |
 
 ### Declaration
