@@ -1377,10 +1377,7 @@ Package: food
 ```cpp
 export module food;
 
-import <iostream>;
-
 export void order() {
-    std::cout << "Order: Pizza\n";
 }
 ```
 
@@ -1389,8 +1386,11 @@ export void order() {
 ```cpp
 import food;
 
+#include <iostream>
+
 int main() {
     order();
+    std::cout << "Order: Pizza\n";
     return 0;
 }
 ```
