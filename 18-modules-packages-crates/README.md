@@ -1578,7 +1578,7 @@ Package
 1. `The Rust Programming Language — Managing Growing Projects with Packages, Crates, and Modules`  
     https://doc.rust-lang.org/book/ch07-00-managing-growing-projects-with-packages-crates-and-modules.html
 2. `Example Modules Code`
-    https://doc.rust-lang.org/rust-by-example/mod.html
+    https://doc.rust-lang.org/rust-by-example/mod.html`
 3. `Rust Module (With Example)`
     https://www.programiz.com/rust/module
 4. `C++ Reference — Modules (C++20)`
@@ -1628,7 +1628,7 @@ Package
 |---|---:|---:|---:|---:|---|
 | นายสิปปกร ทองนุ่ม | `0` | `0` | `0` | `0` | `Concept + Short Code Illustration` |
 | นางสาวอชิรญา ก้อนสุวรรณ | `0` | `37` | `1` | `[จำนวน]` | `Detailed Code + Live Demo` |
-| นางสาวอนัญญณัชช์ ขจรศิริผล | `0` | `[จำนวน]` | `1` | `[จำนวน]` | `Rust vs Other Language + PPL Analysis` |
+| นางสาวอนัญญณัชช์ ขจรศิริผล | `0` | `38` | `4` | `[จำนวน]` | `Rust vs Other Language + PPL Analysis` |
 | นายกฤติน เหลืองระลึก | `0` | `[จำนวน]` | `1` | `[จำนวน]` | `Exercises + Common Mistakes + Challenge` |
 
 ### Teamwork Reflection
