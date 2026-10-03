@@ -1626,7 +1626,7 @@ Package
 | Member | Issues | Commits | Pull Requests | Code Reviews | Contribution |
 |---|---:|---:|---:|---:|---|
 | นายสิปปกร ทองนุ่ม | `0` | `0` | `0` | `0` | `Concept + Short Code Illustration` |
-| นางสาวอชิรญา ก้อนสุวรรณ | `0` | `39` | `1` | `0` | `Detailed Code + Live Demo` |
+| นางสาวอชิรญา ก้อนสุวรรณ | `0` | `44` | `1` | `0` | `Detailed Code + Live Demo` |
 | นางสาวอนัญญณัชช์ ขจรศิริผล | `0` | `41` | `4` | `0` | `Rust vs Other Language + PPL Analysis` |
 | นายกฤติน เหลืองระลึก | `0` | `9` | `1` | `0` | `Exercises + Common Mistakes + Challenge` |
 
