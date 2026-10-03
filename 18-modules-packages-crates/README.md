@@ -1699,7 +1699,7 @@ Package
 
 **Chapter Path:** `rust-tutorial-2569/18-modules-packages-crates`
 
-**Final PR:** `#6`
+**Final PR:** `#31`
 
 **Submitted by:** `Group 18`
 
