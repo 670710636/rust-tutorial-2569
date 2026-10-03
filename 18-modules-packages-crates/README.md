@@ -1578,7 +1578,7 @@ Package
 1. `The Rust Programming Language — Managing Growing Projects with Packages, Crates, and Modules`  
     https://doc.rust-lang.org/book/ch07-00-managing-growing-projects-with-packages-crates-and-modules.html
 2. `Example Modules Code`
-    https://doc.rust-lang.org/rust-by-example/mod.html`
+    https://doc.rust-lang.org/rust-by-example/mod.html
 3. `Rust Module (With Example)`
     https://www.programiz.com/rust/module
 4. `C++ Reference — Modules (C++20)`
@@ -1607,7 +1607,6 @@ Package
 | `ChatGPT` | `ช่วยตรวจสอบ error code และช่วยอธิบายการใช้งาน GitHub สำหรับการทำงานร่วมกันในโปรเจกต์` | `ทดลองเขียนและรันโค้ดจริงด้วย VS Code ก่อนนำมาตรวจสอบ error กับ ChatGPT` |
 | `Claude` | `ช่วยร่างตัวอย่างโค้ด Common Mistakes, Exercises และเนื้อหาสไลด์ของ Member 4` | `คอมไพล์และรันโค้ดทุกตัวอย่างด้วย rustc/cargo ในเครื่อง เทียบข้อความ error กับที่ compiler แสดงจริง และตรวจแนวคิดกับ Rust Book บทที่ 7 และ Rust Reference` |
 | `Gemini` | `ใช้ช่วยอธิบายแนวคิดเรื่องโครงสร้างโมดูล การจัดระเบียบไฟล์ และให้คำแนะนำขั้นตอนการใช้งาน Git/GitHub สำหรับโปรเจกต์กลุ่ม` | `ตรวจสอบความถูกต้องโดยทดลองทำตามขั้นตอนการอัปโหลดไฟล์และคำสั่ง Git ที่แนะนำบนระบบ GitHub จริง` |
-| `[AI tool]` | `[ใช้เพื่ออะไร]` | `[ตรวจสอบอย่างไร]` |
 
 ### Declaration
 
@@ -1627,9 +1626,9 @@ Package
 | Member | Issues | Commits | Pull Requests | Code Reviews | Contribution |
 |---|---:|---:|---:|---:|---|
 | นายสิปปกร ทองนุ่ม | `0` | `0` | `0` | `0` | `Concept + Short Code Illustration` |
-| นางสาวอชิรญา ก้อนสุวรรณ | `0` | `37` | `1` | `[จำนวน]` | `Detailed Code + Live Demo` |
-| นางสาวอนัญญณัชช์ ขจรศิริผล | `0` | `38` | `4` | `[จำนวน]` | `Rust vs Other Language + PPL Analysis` |
-| นายกฤติน เหลืองระลึก | `0` | `9` | `1` | `[จำนวน]` | `Exercises + Common Mistakes + Challenge` |
+| นางสาวอชิรญา ก้อนสุวรรณ | `0` | `37` | `1` | `0` | `Detailed Code + Live Demo` |
+| นางสาวอนัญญณัชช์ ขจรศิริผล | `0` | `38` | `4` | `0` | `Rust vs Other Language + PPL Analysis` |
+| นายกฤติน เหลืองระลึก | `0` | `9` | `1` | `0` | `Exercises + Common Mistakes + Challenge` |
 
 ### Teamwork Reflection
 
@@ -1696,14 +1695,14 @@ Package
 
 ## Submission Information
 
-**Repository:** `[GitHub repository URL]`
+**Repository:** `https://github.com/670710636/rust-tutorial-2569/edit/GROUP18/18-modules-packages-crates/README.md`
 
 **Chapter Path:** `rust-tutorial-2569/18-modules-packages-crates`
 
-**Final PR:** `#[PR number]`
+**Final PR:** `#6`
 
 **Submitted by:** `Group 18`
 
-**Date:** `[YYYY-MM-DD]`
+**Date:** `[2026-10-03]`
 
 
