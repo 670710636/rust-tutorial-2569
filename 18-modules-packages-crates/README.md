@@ -1604,7 +1604,7 @@ https://doc.rust-lang.org/rust-by-example/mod.html`
 
 | AI Tool | Purpose | How the Result Was Verified |
 |---|---|---|
-| `ChatGPT` | `ช่วยตรวจสอบ error code และช่วยอธิบายการใช้งาน GitHub สำหรับการทำงานร่วมกันในโปรเจกต์` | `ทดลองเขียนและรันโค้ดจริงด้วย VS Code ก่อนนำมาตรวจสอบกับ ChatGPT และทำตามขั้นตอนบน GitHub เช่น fork, branch, pull requests` |
+| `ChatGPT` | `ช่วยตรวจสอบ error code และช่วยอธิบายการใช้งาน GitHub สำหรับการทำงานร่วมกันในโปรเจกต์` | `ทดลองเขียนและรันโค้ดจริงด้วย VS Code ก่อนนำมาตรวจสอบ error กับ ChatGPT` |
 | `Claude` | `ช่วยร่างตัวอย่างโค้ด Common Mistakes, Exercises และเนื้อหาสไลด์ของ Member 4` | `คอมไพล์และรันโค้ดทุกตัวอย่างด้วย rustc/cargo ในเครื่อง เทียบข้อความ error กับที่ compiler แสดงจริง และตรวจแนวคิดกับ Rust Book บทที่ 7 และ Rust Reference` |
 | `Gemini` | `ใช้ช่วยอธิบายแนวคิดเรื่องโครงสร้างโมดูล การจัดระเบียบไฟล์ และให้คำแนะนำขั้นตอนการใช้งาน Git/GitHub สำหรับโปรเจกต์กลุ่ม` | `ตรวจสอบความถูกต้องโดยทดลองทำตามขั้นตอนการอัปโหลดไฟล์และคำสั่ง Git ที่แนะนำบนระบบ GitHub จริง` |
 | `[AI tool]` | `[ใช้เพื่ออะไร]` | `[ตรวจสอบอย่างไร]` |
@@ -1618,7 +1618,7 @@ https://doc.rust-lang.org/rust-by-example/mod.html`
 
 **รายละเอียดการใช้ AI**
 
-`[อธิบายว่าใช้ AI ในขั้นตอนใด และสมาชิกตรวจสอบผลลัพธ์อย่างไร]`
+`กลุ่มใช้ AI เป็นเครื่องมือช่วยในการเรียนรู้และพัฒนาโปรเจกต์ โดยใช้ช่วยหาและตรวจสอบข้อมูลร่วมกับเอกสารอ้างอิงที่น่าเชื่อถือ ในส่วนของ ChatGPT ใช้ช่วยตรวจสอบ Error Code ส่วน Example Detail Code ในตัวอย่างโปรเจกต์, Claude ใช้ช่วยร่างตัวอย่างโค้ด Common Mistakes, Exercises และเนื้อหาสไลด์ และ Gemini ใช้ช่วยอธิบายแนวคิดเรื่องโครงสร้าง Module การจัดระเบียบไฟล์ และให้คำแนะนำขั้นตอนการใช้งาน Git/GitHub สำหรับโปรเจกต์กลุ่ม  เช่น fork, branch, pull requests ผลลัพธ์จาก AI ทั้งหมดถูกนำมาตรวจสอบโดยการทดลองเขียนและรันโค้ดจริงด้วย Rust/Cargo และ VS Code รวมถึงทดลองทำตามขั้นตอน Git/GitHub ด้วยตัวสมาชิกแต่ละคนเองจริงก่อนนำมาใช้ในโปรเจกต์`
 
 ---
 
@@ -1627,7 +1627,7 @@ https://doc.rust-lang.org/rust-by-example/mod.html`
 | Member | Issues | Commits | Pull Requests | Code Reviews | Contribution |
 |---|---:|---:|---:|---:|---|
 | นายสิปปกร ทองนุ่ม | `0` | `0` | `0` | `0` | `Concept + Short Code Illustration` |
-| นางสาวอชิรญา ก้อนสุวรรณ | `0` | `[จำนวน]` | `1` | `[จำนวน]` | `Detailed Code + Live Demo` |
+| นางสาวอชิรญา ก้อนสุวรรณ | `0` | `36` | `1` | `[จำนวน]` | `Detailed Code + Live Demo` |
 | นางสาวอนัญญณัชช์ ขจรศิริผล | `0` | `[จำนวน]` | `1` | `[จำนวน]` | `Rust vs Other Language + PPL Analysis` |
 | นายกฤติน เหลืองระลึก | `0` | `[จำนวน]` | `1` | `[จำนวน]` | `Exercises + Common Mistakes + Challenge` |
 
@@ -1698,11 +1698,11 @@ https://doc.rust-lang.org/rust-by-example/mod.html`
 
 **Repository:** `[GitHub repository URL]`
 
-**Chapter Path:** `[เช่น chapters/01-introduction/]`
+**Chapter Path:** `rust-tutorial-2569/18-modules-packages-crates`
 
 **Final PR:** `#[PR number]`
 
-**Submitted by:** `[Group XX]`
+**Submitted by:** `Group 18`
 
 **Date:** `[YYYY-MM-DD]`
 
