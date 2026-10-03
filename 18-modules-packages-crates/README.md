@@ -510,14 +510,14 @@ use utils::{print_header, print_sep};
 fn main() {
     print_header("Student Grade Demo");
 
-    let Achiraya_score = 85.0;
-    let Somchai_score = 45.0;
+    let achiraya_score = 85.0;
+    let somchai_score = 45.0;
 
-    display_result("Achiraya", Achiraya_score);
+    display_result("Achiraya", achiraya_score);
 
     print_sep();
 
-    display_result("Somchai", Somchai_score);
+    display_result("Somchai", somchai_score);
 }
 ```
 คำสั่ง `mod` ต่อไปนี้ใช้ประกาศว่าโปรเจกต์มี Module ชื่อ grade และ utils
@@ -1626,7 +1626,7 @@ Package
 | Member | Issues | Commits | Pull Requests | Code Reviews | Contribution |
 |---|---:|---:|---:|---:|---|
 | นายสิปปกร ทองนุ่ม | `0` | `0` | `0` | `0` | `Concept + Short Code Illustration` |
-| นางสาวอชิรญา ก้อนสุวรรณ | `0` | `37` | `1` | `0` | `Detailed Code + Live Demo` |
+| นางสาวอชิรญา ก้อนสุวรรณ | `0` | `39` | `1` | `0` | `Detailed Code + Live Demo` |
 | นางสาวอนัญญณัชช์ ขจรศิริผล | `0` | `41` | `4` | `0` | `Rust vs Other Language + PPL Analysis` |
 | นายกฤติน เหลืองระลึก | `0` | `9` | `1` | `0` | `Exercises + Common Mistakes + Challenge` |
 
